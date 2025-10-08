@@ -1,26 +1,26 @@
 <?php
 
-class Admin
+class Usuario
 {
     //atributos
-    private $id_admin;
+    private $id_usuario;
     private $nombre;
     private $correo;
     private $clave; //recordar hashear antes de enviar ala base de datos 
 
     //constructor
-    public function __construct($id_admin=null, $nombre=null, $correo=null, $clave=null)
+    public function __construct($id_usuario=null, $nombre=null, $correo=null, $clave=null)
     {
-        $this->id_admin = $id_admin;
+        $this->id_usuario = $id_usuario;
         $this->nombre = $nombre;
         $this->correo = $correo;
         $this->clave = $clave;
     }
 
     //geters
-    public function getIdAdmin()
+    public function getIdUsuario()
     {
-        return $this->id_admin;
+        return $this->id_usuario;
     }
     public function getNombre()
     {
@@ -35,9 +35,9 @@ class Admin
         return $this->clave;
     }
     //seters
-    public function setIdAdmin($id_admin)
+    public function setIdUsuario($id_usuario)
     {
-        $this->id_admin = $id_admin;
+        $this->id_usuario = $id_usuario;
     }
     public function setNombre($nombre)
     {
@@ -52,18 +52,15 @@ class Admin
         $this->clave = $clave;
     }
 
-    //metodos de crud de admin
+    //metodsos para el crud del usuario
     
-    public function crearAdmin()
+    public function crearUsuario()
     {
-        //codigo para crear un admin en la base de datos
+        //codigo para crear un usuario en la base de datos
     }
-    public function autenticarAdmin()
+    public function autenticarUsuario()
     {
-        //codigo para autenticar el ingreso del admin
-        // se guarda el id
-        // y el nombre
+        //codigo para obtener un usuario de la base de datos
     }
-
 
 }

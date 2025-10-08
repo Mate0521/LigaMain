@@ -11,6 +11,7 @@ class Conexion{
             "itiud_aplint", 
             "GYesgQ118&", 
             "itiud_aplint");
+            
     }
     
     public function cerrar(){

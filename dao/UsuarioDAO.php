@@ -1,17 +1,17 @@
 <?php
 
-class AdminDAO
+class UsuarioDAO
 {
     //atributos
-    private $id_admin;
+    private $id_usuario;
     private $nombre;
     private $correo;
     private $clave; //recordar hashear antes de enviar ala base de datos 
 
     //constructor
-    public function __construct($id_admin=null, $nombre=null, $correo=null, $clave=null)
+    public function __construct($id_usuario=null, $nombre=null, $correo=null, $clave=null)
     {
-        $this->id_admin = $id_admin;
+        $this->id_usuario = $id_usuario;
         $this->nombre = $nombre;
         $this->correo = $correo;
         $this->clave = $clave;
