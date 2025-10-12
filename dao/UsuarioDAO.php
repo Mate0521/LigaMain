@@ -22,9 +22,11 @@ class UsuarioDAO
     {
         //codigo para crear un admin en la base de datos
     }
-    public function autenticarAdmin()
+    public function autenticarUsuario()
     {
-        //codigo para obtener un admin de la base de datos
+        return "SELECT id_usuario
+                FROM g1_usuario
+                WHERE correo = '$this->correo' AND clave = ".md5($this->clave);
     }
 
 }

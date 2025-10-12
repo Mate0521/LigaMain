@@ -60,10 +60,17 @@ class Admin
     }
     public function autenticarAdmin()
     {
-        //codigo para autenticar el ingreso del admin
-        // se guarda el id
-        // y el nombre
+        $conexion = new Conexion();
+        $adminDAO = new AdminDAO("", "", $this->correo, $this->clave);
+        $sql =$adminDAO->autenticarAdmin();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_admin = $fila["id_admin"];
+            $conexion->cerrar();
+            return true;
+        }
+        return false;
     }
-
 
 }

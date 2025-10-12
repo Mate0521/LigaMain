@@ -60,7 +60,17 @@ class Usuario
     }
     public function autenticarUsuario()
     {
-        //codigo para obtener un usuario de la base de datos
+        $conexion = new Conexion();
+        $adminDAO = new UsuarioDAO("", "", $this->correo, $this->clave);
+        $sql =$adminDAO->autenticarUsuario();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_usuario = $fila["id_usuario"];
+            $conexion->cerrar();
+            return true;
+        }
+        return false;
     }
 
 }
