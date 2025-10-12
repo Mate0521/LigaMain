@@ -36,7 +36,11 @@ if(isset($_POST["autenticar"])){
 				<div class="card">
 					<?php if (isset($error) && $error): ?>
 						<div class="alert alert-danger mt-3" role="alert" id="alertContainer">
+<<<<<<< HEAD
 							<p id="alert">Error en el inicio de sesión. Verifique credenciales correo o clave incorrectas</p>
+=======
+							<p id="alert">Error en el inicio de sesión. Verifique credenciales</p>
+>>>>>>> origin/feature/login
 						</div>
 					<?php endif; ?>
 					<div class="card-header">
