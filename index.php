@@ -10,10 +10,11 @@ $page = [
     "Home" => "views/home.php",
     "Login" => "views/login.php",
     "Registrarse" => "views/resgistrarse.php",
+    "admin" => "views/admin.php",
 ];
 
 if (!isset($_SESSION["pid"])) {
-    $_SESSION["pid"] = "Home";
+    $_SESSION["pid"] = "Login";
 }
 
 
