@@ -66,7 +66,22 @@ class Admin
         $conexion->abrir();
         $conexion->ejecutar($sql);
         if($fila = $conexion->registro()){
-            $this->id_admin = $fila["id_admin"];
+            $this->id_admin = $fila[0];
+            $conexion->cerrar();
+            return true;
+        }
+        return false;
+    }
+    public function obtenerAdmin()
+    {
+        $conexion = new Conexion();
+        $adminDAO = new AdminDAO($this->id_admin);
+        $sql = $adminDAO->obtenerAdmin();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->nombre = $fila[0];
+            $this->correo = $fila[1];
             $conexion->cerrar();
             return true;
         }

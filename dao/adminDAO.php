@@ -24,9 +24,15 @@ class AdminDAO
     }
     public function autenticarAdmin()
     {
-        return "SELECT id_admin
-                FROM g1_admin
-                WHERE correo = '$this->correo' AND clave = ".md5($this->clave);
+        return "SELECT `id_admin` 
+                FROM `g1_admin` 
+                WHERE correo = '$this->correo' and clave = '".md5($this->clave)."';";
+    }
+    public function obtenerAdmin()
+    {
+        return "SELECT `nombre`, `correo` 
+                FROM `g1_admin` 
+                WHERE `id_admin` = ". $this->id_admin .";";
     }
 
 }   

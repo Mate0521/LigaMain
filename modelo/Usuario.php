@@ -56,7 +56,16 @@ class Usuario
     
     public function crearUsuario()
     {
-        //codigo para crear un usuario en la base de datos
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $clienteDAO = new UsuarioDAO("", $this -> nombre, $this -> correo, $this -> clave);        
+        try{
+            $conexion -> ejecutar($clienteDAO ->crearUsuario());
+            $conexion -> cerrar();
+            return true;
+        }catch(Exception $e){
+            return $e;
+        }
     }
     public function autenticarUsuario()
     {
@@ -66,7 +75,22 @@ class Usuario
         $conexion->abrir();
         $conexion->ejecutar($sql);
         if($fila = $conexion->registro()){
-            $this->id_usuario = $fila["id_usuario"];
+            $this->id_usuario = $fila[0];
+            $conexion->cerrar();
+            return true;
+        }
+        return false;
+    }
+    public function obtenerUsuario()
+    {
+        $conexion = new Conexion();
+        $usuarioDAO = new UsuarioDAO($this->id_usuario);
+        $sql = $usuarioDAO->obtenerUsuario();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->nombre = $fila[0];
+            $this->correo = $fila[1];
             $conexion->cerrar();
             return true;
         }

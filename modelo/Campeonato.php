@@ -49,7 +49,16 @@ class Campeonato
 
     public function crearCampeonato()
     {
-        //codigo para crear un campeonato en la base de datos
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this -> nombre);        
+        try{
+            $conexion -> ejecutar($campeonatoDAO ->crearCampeonato());
+            $conexion -> cerrar();
+            return true;
+        }catch(Exception $e){
+            return $e;
+        }
     }
     public function obtenerCampeonato()
     {
@@ -62,5 +71,23 @@ class Campeonato
     public function eliminarCampeonato()
     {
         //codigo para eliminar un campeonato de la base de datos
+    }
+    public function validarNombre()
+    {
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this->nombre);
+        $sql = $campeonatoDAO->valNombre();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_campeonato = $fila[0];
+            $conexion->cerrar();
+            return false;
+        }
+        return true;
+    }
+
+    public function relaionarEquipos(){
+        
     }
 }

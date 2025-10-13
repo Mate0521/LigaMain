@@ -19,11 +19,18 @@ class CampeonatoDAO
 
     public function crearCampeonato()
     {
-        //codigo para crear un campeonato en la base de datos
+        return "INSERT INTO `g1_campeonato`( `id_usuario`, `nombre`) 
+                VALUES ('". $this->id_usuario ."','". $this->nombre ."');";
     }
     public function obtenerCampeonato()
     {
         //codigo para obtener un campeonato de la base de datos
+    }
+    public function valNombre()
+    {
+       return " SELECT `id_campeonato`
+                FROM `g1_campeonato` 
+                WHERE `id_usuario`=". $this->id_usuario ." AND `nombre`='". $this->nombre ."';";
     }
     
 }

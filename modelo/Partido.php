@@ -1,5 +1,5 @@
 <?php
-class Equipo
+class Partido
 {
     //atributos
     private $id_partido;

@@ -24,5 +24,10 @@ class EquipoDAO
     {
         //codigo para obtener un equipo de la base de datos
     }
+    public function listarEquipos()
+    {
+        return "SELECT `id_equipo`, `nombre`, `id_liga` 
+                FROM `g1_equipo`;";
+    }
     
 }
