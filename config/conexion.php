@@ -5,12 +5,12 @@ class Conexion{
     private $resultado;
     
     public function abrir(){
-        //$this -> conexion = new mysqli("localhost", "root", "", "liga_main");
-        $this -> conexion = new mysqli(
-            "10.123.0.165", 
-            "itiud_aplint", 
-            "GYesgQ118&", 
-            "itiud_aplint");
+        $this -> conexion = new mysqli("localhost", "root", "", "liga_main");
+        //$this -> conexion = new mysqli(
+        //    "10.123.0.165", 
+        //    "itiud_aplint", 
+        //    "GYesgQ118&", 
+        //  "itiud_aplint");
             
     }
     

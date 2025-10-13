@@ -62,4 +62,18 @@ class Equipo
     {
         //codigo para eliminar un equipo de la base de datos
     }
+    public function listarEquipos()
+    {
+        $conexion = new Conexion();
+        $equipoDAO = new EquipoDAO();
+        $sql = $equipoDAO->listarEquipos();
+        $conexion -> abrir();
+        $equipos = [];
+        $conexion -> ejecutar($sql);
+        while($fila = $conexion -> registro()){
+            $equipos[] = new Equipo($fila[0], $fila[1], $fila[2]);
+        }
+        $conexion -> cerrar();
+        return $equipos;
+    }
 }
