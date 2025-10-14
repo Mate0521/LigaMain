@@ -17,6 +17,7 @@ class FechaDAO
     //metodos para el crud de la fecha
     public function crearFecha()
     {
-        //codigo para crear una fecha en la base de datos
+        return "INSERT INTO `g1_fecha`(`id_campeonato`, `fecha`) 
+                VALUES ('". $this->id_campeonato ."','". $this->fecha ."');";
     }
 }

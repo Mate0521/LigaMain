@@ -42,6 +42,17 @@ class Fecha
     //metodos para crear la fecha en la base de datos
     public function crearFecha()
     {
-        //codigo para crear una fecha en la base de datos
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $fechaDAO = new FechaDAO("", $this->id_campeonato, $this->fecha);        
+        try{
+            $sql=$fechaDAO ->crearFecha();
+            $conexion -> ejecutar($sql);
+            $conexion -> cerrar();
+            return true;
+        }catch(Exception $e){
+            return $e;
+        }
+
     }
 }

@@ -5,6 +5,7 @@ class EquipoDAO
     private $id_equipo;
     private $nombre;
     private $id_liga;
+    private $img;
 
     //contructor
     
@@ -26,8 +27,8 @@ class EquipoDAO
     }
     public function listarEquipos()
     {
-        return "SELECT `id_equipo`, `nombre`, `id_liga` 
-                FROM `g1_equipo`;";
+        return "SELECT `id_equipo`, `nombre`, `id_liga`, `img` 
+                FROM `g1_equipo`";
     }
     
 }
