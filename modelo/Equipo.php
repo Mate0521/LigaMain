@@ -62,7 +62,18 @@ class Equipo
     }
     public function obtenerEquipo()
     {
-        //codigo para obtener un equipo de la base de datos
+        $conexion = new Conexion();
+        $equipoDAO = new EquipoDAO($this->id_equipo);
+        $sql = $equipoDAO->obtenerEquipo();
+        $conexion -> abrir();
+        $conexion -> ejecutar($sql);
+        if($fila = $conexion -> registro()){
+            $this->nombre=$fila[0];
+            $this->id_liga=$fila[1];
+            $this->img=$fila[2];
+        }
+        
+
     }
     public function actualizarEquipo()
     {
@@ -88,4 +99,5 @@ class Equipo
         $conexion -> cerrar();
         return $equipos;
     }
+
 }

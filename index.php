@@ -16,6 +16,10 @@ include_once 'modelo/Fecha.php';
 include_once 'dao/FechaDAO.php';
 include_once 'modelo/Tipo.php';
 include_once 'dao/TipoDAO.php';
+include_once 'modelo/Fase.php';
+include_once 'dao/FaseDAO.php';
+include_once 'modelo/Partido.php';
+include_once 'dao/PartidoDAO.php';
 
 
 $pages = [

@@ -20,4 +20,16 @@ class FechaDAO
         return "INSERT INTO `g1_fecha`(`id_campeonato`, `fecha`) 
                 VALUES ('". $this->id_campeonato ."','". $this->fecha ."');";
     }
+
+    public function listarFechas(){
+        return "SELECT `id_fecha`,  `fecha`
+                FROM `g1_fecha` 
+                WHERE `id_campeonato` = ". $this->id_campeonato .";";
+    }
+
+    public function obtenerFecha(){
+        return "SELECT `fecha` 
+                FROM `g1_fecha` 
+                WHERE `id_fecha` = ". $this->id_fecha .";";
+    }
 }

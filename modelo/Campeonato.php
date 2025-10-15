@@ -84,6 +84,20 @@ class Campeonato
             $conexion->cerrar();
         }
     }
+    public function obtenerCampeonatoId()
+    {
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        $sql = $campeonatoDAO->obtenerCampeonato();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_usuario = $fila[0];
+            $this-> nombre=$fila[1];
+            $this-> id_tipo=$fila[2];
+            $conexion->cerrar();
+        }
+    }
     public function eliminarCampeonato()
     {
         //codigo para eliminar un campeonato de la base de datos
@@ -132,6 +146,22 @@ class Campeonato
 
         $conexion -> cerrar();
         return $campeonatos;
+    }
+    public function listarEquipos(){
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        $sql = $campeonatoDAO->listarEquipos();
+        $conexion -> abrir();
+        $equiopos = [];
+        $conexion -> ejecutar($sql);
+
+        while($fila = $conexion -> registro()){
+            $equiopos[] = $fila[0];
+        }
+
+        $conexion -> cerrar();
+        return $equiopos;
+
     }
 
 

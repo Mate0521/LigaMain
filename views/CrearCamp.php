@@ -4,7 +4,7 @@ $var = null;
 $valTipo=null;
 $nombreValido = null;
 $equiposValidos = null;
-$fechasValidas = null;
+$fechaVal = null;
 $mensajeGeneral = null;
 
 $equipos = [];
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
 
     // regla: al menos 2 equipos
     //contando de que son partidos con juornada de ida y vuelta
-    $equiposValidos = count($equiposSeleccionados) >= 2;
+    $equiposValidos = count($equiposSeleccionados) >= 3;
     $jornadas = count($equiposSeleccionados)%2==0?count($equiposSeleccionados)-1:count($equiposSeleccionados);
     
 
@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
                     <?php if ($fechaVal === true): ?>
                         <div class="alert alert-success mb-0 mt-2">Fechas válidas.</div>
                     <?php elseif ($fechaVal === false): ?>
-                        <div class="alert alert-danger mb-0 mt-2">Ingrese al menos una fecha válida en orden cronológico.</div>
+                        <div class="alert alert-danger mb-0 mt-2">Ingrese las fechas en las que se jugara deben de ser <?php echo $jornadas ?></div>
                     <?php endif; ?>
                 </div>
                 <div class="card-body">

@@ -94,7 +94,6 @@ class Partido
     public function crearDistribucion($equipos, $tipo, $fechas){
         switch ($tipo){
             case 1:
-                ;
                 $this->distribucion($fechas,$this->todosContraTodos($equipos));
                 break;
             case 2:
@@ -158,12 +157,9 @@ class Partido
 
     public function distribucion($fechas, $calendario){
         $partidos = [];
+        var_dump("apartir de aqui weon", $calendario, "y hasta aqui");
         $id_fase = 1; // fase del todos contra todos
 
-        // Validar que haya fechas suficientes
-        if (count($fechas) < count($calendario)) {
-            throw new Exception("No hay suficientes fechas para las jornadas generadas.");
-        }
 
         // Recorrer jornadas (cada jornada = una fecha)
         for ($i = 0; $i < count($calendario); $i++) {
@@ -172,23 +168,66 @@ class Partido
 
             foreach ($jornada as $match) {
                 $local = $match['local'];
+                var_dump($local);
                 $visit = $match['visit'];
+                var_dump($visit);
 
                 // Crear nuevo partido
                 $partido = new Partido();
-                $partido->setIdEqLocal($local->getIdEquipo());
-                $partido->setIdEqVisit($visit->getIdEquipo());
+                $partido->setIdEqLocal($local);
+                $partido->setIdEqVisit($visit);
                 $partido->setIdFase($id_fase);
                 $partido->setIdFecha($fechaObj->getIdFecha());
                 $partido->setGolesLocal(0);
                 $partido->setGolesVisit(0);
 
                 $partidos[] = $partido;
+                
             }
         }
+        var_dump("pere hasta aqui",$partidos);
+        return $this->insertarPartidos($partidos);
 
+
+    }
+    public function insertarPartidos($partidos){
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        try{
+            foreach($partidos as $partido){
+                $partidoDAO = new PartidoDAO( "", $partido->getIdEqLocal(), $partido->getIdEqVisit(), $partido->getIdFase(), $partido->getIdFecha() );
+                $sql = $partidoDAO->crearPartido();
+                $conexion -> ejecutar($sql);
+            }
+            $conexion -> cerrar();
+            return true;
+
+        }catch(Exception $e){
+            return $e;
+        }       
+    }
+
+    public function obtenerPartidos( $fechas){
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $partidoDAO= new PartidoDAO();
+
+        $id_fechas = [];
+        foreach ($fechas as $fecha) {
+            $id_fechas[] = $fecha->getIdFecha();
+        }
+        $id_fechas= implode(',', $id_fechas);
+
+        $sql = $partidoDAO->listarPartidos($id_fechas);
+        $partidos = [];
+        $conexion -> ejecutar($sql);
+
+        while($fila = $conexion -> registro()){
+            $partidos[] = new Partido($fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5], $fila[6]);
+        }
+
+        $conexion -> cerrar();
         return $partidos;
 
     }
-
 }

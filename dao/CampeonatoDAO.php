@@ -26,7 +26,9 @@ class CampeonatoDAO
     }
     public function obtenerCampeonato()
     {
-        //codigo para obtener un campeonato de la base de datos
+        return "SELECT  `id_usuario`, `nombre`, `id_tipo` 
+                FROM `g1_campeonato` 
+                WHERE `id_campeonato` = ". $this->id_campeonato ." ;";
     }
     public function valNombre()
     {
@@ -42,6 +44,12 @@ class CampeonatoDAO
         return "SELECT `id_campeonato`, `id_usuario`, `nombre`, `id_tipo` 
                 FROM `g1_campeonato` 
                 WHERE `id_usuario` = '". $this->id_usuario ."';";
+    }
+    public function listarEquipos(){
+        return "SELECT  `id_equipo`, `puntuacion` 
+                FROM `g1_campeonato_equipos` 
+                WHERE `id_campeonato`=". $this->id_campeonato.";";
+
     }
     
 }

@@ -23,7 +23,9 @@ class EquipoDAO
     }
     public function obtenerEquipo()
     {
-        //codigo para obtener un equipo de la base de datos
+        return "SELECT `nombre`, `id_liga`, `img` 
+                FROM `g1_equipo` 
+                WHERE `id_equipo` = ". $this->id_equipo .";";
     }
     public function listarEquipos()
     {
