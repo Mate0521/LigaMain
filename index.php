@@ -4,10 +4,10 @@ session_start();
 
 
 include_once 'modelo/Usuario.php';
-include_once 'modelo/Admin.php';
+include_once 'modelo/admin.php';
 include_once 'config/conexion.php';
 include_once 'dao/UsuarioDAO.php';
-include_once 'dao/AdminDAO.php';
+include_once 'dao/adminDAO.php';
 include_once 'modelo/Campeonato.php';
 include_once 'dao/CampeonatoDAO.php';
 include_once 'modelo/Equipo.php';
@@ -24,7 +24,7 @@ include_once 'dao/PartidoDAO.php';
 
 $pages = [
     "Home" => "views/Home.php",
-    "Login" => "views/login.php",
+    "Login" => "views/Login.php",
     "Registrarse" => "views/RegistrarU.php",
     "Admin" => "views/PanelAdmin.php",
     "Error" => "views/Error.php",
