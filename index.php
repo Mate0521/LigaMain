@@ -23,7 +23,7 @@ include_once 'dao/PartidoDAO.php';
 
 
 $pages = [
-    "Home" => "views/Home.php",
+    "Home" => "views/home.php",
     "Login" => "views/Login.php",
     "Registrarse" => "views/RegistrarU.php",
     "Admin" => "views/PanelAdmin.php",
