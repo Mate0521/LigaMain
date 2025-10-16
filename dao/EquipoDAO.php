@@ -5,6 +5,7 @@ class EquipoDAO
     private $id_equipo;
     private $nombre;
     private $id_liga;
+    private $img;
 
     //contructor
     
@@ -22,7 +23,14 @@ class EquipoDAO
     }
     public function obtenerEquipo()
     {
-        //codigo para obtener un equipo de la base de datos
+        return "SELECT `nombre`, `id_liga`, `img` 
+                FROM `g1_equipo` 
+                WHERE `id_equipo` = ". $this->id_equipo .";";
+    }
+    public function listarEquipos()
+    {
+        return "SELECT `id_equipo`, `nombre`, `id_liga`, `img` 
+                FROM `g1_equipo`";
     }
     
 }

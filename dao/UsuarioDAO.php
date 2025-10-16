@@ -18,13 +18,22 @@ class UsuarioDAO
     }
 
     //metodos 
-    public function crearAdmin()
+    public function crearUsuario()
     {
-        //codigo para crear un admin en la base de datos
+        return "insert into g1_usuario(nombre, correo, clave)
+                values ('" . $this -> nombre . "', '". $this -> correo . "','" . md5($this -> clave) . "')";
     }
-    public function autenticarAdmin()
+    public function autenticarUsuario()
+    {   
+        return "SELECT id_usuario
+                FROM g1_usuario
+                WHERE correo = '$this->correo' AND clave = '".md5($this->clave)."';";
+    }
+    public function obtenerUsuario()
     {
-        //codigo para obtener un admin de la base de datos
+        return "SELECT `nombre`, `correo` 
+                FROM `g1_usuario` 
+                WHERE `id_usuario` = ". $this->id_usuario .";";
     }
 
 }
