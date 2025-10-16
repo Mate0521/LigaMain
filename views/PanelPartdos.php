@@ -62,6 +62,7 @@ if (!isset($partidos) || empty($partidos)) {
                     <td><?= htmlspecialchars($visitante->getNombre()) ?></td>
                     <td><?= htmlspecialchars($partidoOb->getGolesVisit()) ?></td>
                     <td><?= htmlspecialchars($faseObj->getNombre()) ?></td>
+                    <td></td>
                 </tr>
 
             <?php endforeach; ?>
