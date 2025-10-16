@@ -4,14 +4,16 @@ class Equipo
     private $id_equipo;
     private $nombre;
     private $id_liga;
+    private $img;
 
     //contructor
     
-    public function __construct($id_equipo=null, $nombre=null, $id_liga=null)
+    public function __construct($id_equipo=null, $nombre=null, $id_liga=null, $img=null)
     {
         $this->id_equipo = $id_equipo;
         $this->nombre = $nombre;
         $this->id_liga = $id_liga;
+        $this->img = $img;
     }
     
     //getters
@@ -28,6 +30,10 @@ class Equipo
     {
         return $this->id_liga;
     }
+    public function getImg()
+    {
+        return $this->img;
+    }
 
     //setters
     
@@ -43,6 +49,10 @@ class Equipo
     {
         $this->id_liga = $id_liga;
     }
+    public function setImg($img)
+    {
+        $this->img = $img;
+    }
 
     //metodos para el crud del equipo
     
@@ -52,7 +62,18 @@ class Equipo
     }
     public function obtenerEquipo()
     {
-        //codigo para obtener un equipo de la base de datos
+        $conexion = new Conexion();
+        $equipoDAO = new EquipoDAO($this->id_equipo);
+        $sql = $equipoDAO->obtenerEquipo();
+        $conexion -> abrir();
+        $conexion -> ejecutar($sql);
+        if($fila = $conexion -> registro()){
+            $this->nombre=$fila[0];
+            $this->id_liga=$fila[1];
+            $this->img=$fila[2];
+        }
+        
+
     }
     public function actualizarEquipo()
     {
@@ -70,10 +91,13 @@ class Equipo
         $conexion -> abrir();
         $equipos = [];
         $conexion -> ejecutar($sql);
+
         while($fila = $conexion -> registro()){
-            $equipos[] = new Equipo($fila[0], $fila[1], $fila[2]);
+            $equipos[] = new Equipo($fila[0], $fila[1], $fila[2], $fila[3]);
         }
+
         $conexion -> cerrar();
         return $equipos;
     }
+
 }

@@ -6,13 +6,15 @@ class Campeonato
     private $id_campeonato;
     private $id_usuario;
     private $nombre;
+    private $id_tipo;
 
     //constructor
-    public function __construct($id_campeonato=null, $id_usuario=null, $nombre=null)
+    public function __construct($id_campeonato=null, $id_usuario=null, $nombre=null, $id_tipo=null)
     {
         $this->id_campeonato = $id_campeonato;
         $this->id_usuario = $id_usuario;
         $this->nombre = $nombre;
+        $this->id_tipo=$id_tipo;
     }
 
     //getters
@@ -29,6 +31,11 @@ class Campeonato
     {
         return $this->nombre;
     }
+    public function getIdTipo()
+    {
+        return $this->id_tipo;
+    }
+
 
     //setters
 
@@ -44,6 +51,10 @@ class Campeonato
     {
         $this->nombre = $nombre;
     }
+    public function setIdTipo($id_tipo)
+    {
+        $this->id_tipo = $id_tipo;
+    }
 
     //metodos para el crud del campeonato
 
@@ -51,10 +62,11 @@ class Campeonato
     {
         $conexion = new Conexion();
         $conexion -> abrir();
-        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this -> nombre);        
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this -> nombre, $this->id_tipo);        
         try{
             $conexion -> ejecutar($campeonatoDAO ->crearCampeonato());
             $conexion -> cerrar();
+            $this->obtenerCampeonato();
             return true;
         }catch(Exception $e){
             return $e;
@@ -62,11 +74,29 @@ class Campeonato
     }
     public function obtenerCampeonato()
     {
-        //codigo para obtener un campeonato de la base de datos
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this->nombre);
+        $sql = $campeonatoDAO->valNombre();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_campeonato = $fila[0];
+            $conexion->cerrar();
+        }
     }
-    public function actualizarCampeonato()
+    public function obtenerCampeonatoId()
     {
-        //codigo para actualizar un campeonato en la base de datos
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        $sql = $campeonatoDAO->obtenerCampeonato();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->id_usuario = $fila[0];
+            $this-> nombre=$fila[1];
+            $this-> id_tipo=$fila[2];
+            $conexion->cerrar();
+        }
     }
     public function eliminarCampeonato()
     {
@@ -87,7 +117,52 @@ class Campeonato
         return true;
     }
 
-    public function relaionarEquipos(){
+    public function relaionarEquipos($idEquipo){
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato, "", "");        
+        try{
+            $sql=$campeonatoDAO ->relaionarEquipos($idEquipo);
+            $conexion -> ejecutar($sql);
+            $conexion -> cerrar();
+            return true;
+        }catch(Exception $e){
+            return $e;
+        }
+
         
     }
+    public function listarCampeonatos(){
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario);
+        $sql = $campeonatoDAO->listarCampeonatos();
+        $conexion -> abrir();
+        $campeonatos = [];
+        $conexion -> ejecutar($sql);
+
+        while($fila = $conexion -> registro()){
+            $campeonatos[] = new Campeonato($fila[0], $fila[1], $fila[2], $fila[3]);
+        }
+
+        $conexion -> cerrar();
+        return $campeonatos;
+    }
+    public function listarEquipos(){
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        $sql = $campeonatoDAO->listarEquipos();
+        $conexion -> abrir();
+        $equiopos = [];
+        $conexion -> ejecutar($sql);
+
+        while($fila = $conexion -> registro()){
+            $equiopos[] = $fila[0];
+        }
+
+        $conexion -> cerrar();
+        return $equiopos;
+
+    }
+
+
 }

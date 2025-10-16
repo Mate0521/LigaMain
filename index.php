@@ -12,6 +12,14 @@ include_once 'modelo/Campeonato.php';
 include_once 'dao/CampeonatoDAO.php';
 include_once 'modelo/Equipo.php';
 include_once 'dao/EquipoDAO.php';
+include_once 'modelo/Fecha.php';
+include_once 'dao/FechaDAO.php';
+include_once 'modelo/Tipo.php';
+include_once 'dao/TipoDAO.php';
+include_once 'modelo/Fase.php';
+include_once 'dao/FaseDAO.php';
+include_once 'modelo/Partido.php';
+include_once 'dao/PartidoDAO.php';
 
 
 $pages = [
@@ -22,7 +30,8 @@ $pages = [
     "Error" => "views/Error.php",
     "CrearCamp" => "views/CrearCamp.php",
     "EliminarCamp" => "views/EliminarCamp.php",
-    "PanelDatos" => "views/PanelDatos.php"
+    "PanelDatos" => "views/Datos.php",
+    "PanelCam" => "views/PanelPartdos.php"
 ];
 
 // Página por defecto
