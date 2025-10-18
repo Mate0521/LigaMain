@@ -10,7 +10,13 @@ class TipoDAO{
         $this->nombre = $nombre;
     }
 
-    public function obtenerTipo(){
+    public function obtenerTipos(){
         return "SELECT `id_tipo`, `nombre` FROM `g1_tipo`";
+    }
+
+    public function obtenerTipo(){
+        return "SELECT `nombre`
+                FROM `g1_tipo`
+                WHERE `id_tipo`= ". $this->id_tipo ." ;";
     }
 }

@@ -29,4 +29,16 @@ class Liga
     {
         $this->nombre = $nombre;
     }
+
+    public function obtenerLiga(){
+        $conexion = new Conexion();
+        $ligaDAO = new LigaDAO($this->id_liga);
+        $sql = $ligaDAO->obtenerLiga();
+        $conexion -> abrir();
+        $conexion -> ejecutar($sql);
+        if($fila = $conexion->registro()){
+            $this->nombre=$fila[0];
+        }
+        $conexion -> cerrar();
+    }
 }
