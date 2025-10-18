@@ -10,6 +10,8 @@ $mensajeGeneral = null;
 $equipos = [];
 $equiposSeleccionados = [];
 $fechas = [];
+$tipoSeleccionado = null;
+
 
 $campeonato = new Campeonato("", $_SESSION["id"]);
 
@@ -37,9 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
     // 3) Equipos seleccionados
      $equiposSeleccionados = (array)($_POST['equipos'] ?? []);
 
-    // regla: al menos 2 equipos
+    // regla dependiendo del campeonato
     //contando de que son partidos con juornada de ida y vuelta
-    $equiposValidos = count($equiposSeleccionados) >= 3;
+    if(((count($equiposSeleccionados)==16 || count($equiposSeleccionados)==8 || count($equiposSeleccionados)==4) && $tipoSeleccionado==2) //caso de eliminatoria
+        || (count($equiposSeleccionados) == 32 && $tipoSeleccionado==3) //caso de mixto
+        || (count($equiposSeleccionados)>= 3 && $tipoSeleccionado==1))//caso de liga 
+    {
+        $equiposValidos=true;
+        
+    }else{
+        $equiposValidos=false;
+    }
     $jornadas = count($equiposSeleccionados)%2==0?count($equiposSeleccionados)-1:count($equiposSeleccionados);
     
 
@@ -50,9 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
     // Si todo válido -> crear campeonato y relaciones
     if ($nombreValido && $equiposValidos && $fechaVal) {
         $var = $campeonato->crearCampeonato();
-        var_dump($campeonato);
-        var_dump($equiposSeleccionados);
-        var_dump($fechas);
         if ($var) {
             // asociar equipos (ajusta al método real de tu modelo)
             foreach ($equiposSeleccionados as $idEquipo) {
@@ -143,10 +150,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
             <div class="card mb-3">
                 <div class="card-header">
                     <strong>Equipos</strong>
-                    <?php if ($equiposValidos === true): ?>
+                    <?php if ($equiposValidos == true): ?>
                         <div class="alert alert-success mb-0 mt-2">Equipos seleccionados correctos (<?php echo count($equiposSeleccionados); ?>)</div>
-                    <?php elseif ($equiposValidos === false): ?>
-                        <div class="alert alert-danger mb-0 mt-2">Seleccione al menos 2 equipos válidos.</div>
+                    <?php elseif ($equiposValidos == false && $tipoSeleccionado == 1): //liga ?>
+                        <div class="alert alert-danger mb-0 mt-2">Seleccione por lo menos 3 equipos </div>
+                    <?php elseif ($equiposValidos == false && $tipoSeleccionado == 2): //eliminatoria?>
+                        <div class="alert alert-danger mb-0 mt-2">Seleccione por lo menos 4 equipos o una canctidad que sea potencia de 2 (4, 8, 16) </div>
+                    <?php elseif ($equiposValidos == false && $tipoSeleccionado == 3): //mixto?>
+                        <div class="alert alert-danger mb-0 mt-2">Seleccione por 32 equipos</div>
                     <?php endif; ?>
                 </div>
                 <div class="card-body">

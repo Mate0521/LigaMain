@@ -69,7 +69,11 @@ class Equipo
         $conexion -> ejecutar($sql);
         if($fila = $conexion -> registro()){
             $this->nombre=$fila[0];
-            $this->id_liga=$fila[1];
+
+            $liga=new Liga($fila[1]);
+            $liga->obtenerLiga();
+            $this->id_liga=$liga;
+            
             $this->img=$fila[2];
         }
         

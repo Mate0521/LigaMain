@@ -8,18 +8,16 @@ $campeonato->obtenerCampeonatoId();
 
 // Obtener las fechas del campeonato
 $fechas = $fecha->listarFechas();
-var_dump($fechas);
+
 
 // Obtener los partidos asociados a esas fechas
 $partidos = $partido->obtenerPartidos($fechas);
-var_dump($partidos);
+
 
 //caso en el que no se hayan iniciado los partidos 
 if (!isset($partidos) || empty($partidos)) {
     $equipos = $campeonato->listarEquipos();
-    var_dump($equipos);
     $tipo = $campeonato->getIdTipo();
-    var_dump($tipo);
     $partido->crearDistribucion($equipos, $tipo, $fechas);
     $partidos = $partido->obtenerPartidos($fechas);
 }
@@ -40,29 +38,16 @@ if (!isset($partidos) || empty($partidos)) {
         <tbody>
             <?php foreach ($partidos as $partidoOb): ?>
 
-                <?php
-                // Obtener datos relacionados del partido
-                $fechaObj = new Fecha($partidoOb->getIdFecha());
-                $fechaObj->obtenerFecha(); // suponiendo que llena el objeto
-
-                $local = new Equipo($partidoOb->getIdEqLocal());
-                $local->obtenerEquipo();
-
-                $visitante = new Equipo($partidoOb->getIdEqVisit());
-                $visitante->obtenerEquipo();
-
-                $faseObj = new Fase($partidoOb->getIdFase());
-                $faseObj->obtenerFase();
-                ?>
-
                 <tr>
-                    <th scope="row"><?= htmlspecialchars($fechaObj->getFecha()) ?></th>
-                    <td><?= htmlspecialchars($local->getNombre()) ?></td>
-                    <td><?= htmlspecialchars($partidoOb->getGolesLocal()) ?></td>
-                    <td><?= htmlspecialchars($visitante->getNombre()) ?></td>
-                    <td><?= htmlspecialchars($partidoOb->getGolesVisit()) ?></td>
-                    <td><?= htmlspecialchars($faseObj->getNombre()) ?></td>
-                    <td></td>
+                    <th scope="row"><?= $partidoOb->getIdFecha()->getFecha() ?></th>
+                    <td><?= $partidoOb->getIdEqLocal()->getNombre() ?></td>
+                    <td><?= $partidoOb->getGolesLocal() ?></td>
+                    <td><?= $partidoOb->getIdEqVisit()->getNombre() ?></td>
+                    <td><?= $partidoOb->getGolesVisit() ?></td>
+                    <td><?= $partidoOb->getIdFase()->getNombre() ?></td>
+                    <td>
+                            <a href="index.php?pid=EdicionPartido&idPartido="<?php echo $partidoOb->getIdPartido() ?> class="btn btn-success">Jugar Partido</a>
+                    </td>
                 </tr>
 
             <?php endforeach; ?>
