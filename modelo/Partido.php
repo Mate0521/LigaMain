@@ -149,6 +149,7 @@ class Partido
 
     }
     public function eliminatoria($equipos){
+        
 
     }
     public function mixta($equipos){
@@ -157,7 +158,6 @@ class Partido
 
     public function distribucion($fechas, $calendario){
         $partidos = [];
-        var_dump("apartir de aqui weon", $calendario, "y hasta aqui");
         $id_fase = 1; // fase del todos contra todos
 
 
@@ -185,7 +185,6 @@ class Partido
                 
             }
         }
-        var_dump("pere hasta aqui",$partidos);
         return $this->insertarPartidos($partidos);
 
 
