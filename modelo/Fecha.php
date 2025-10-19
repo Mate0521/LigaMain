@@ -80,6 +80,10 @@ class Fecha
         $conexion -> ejecutar($sql);
         if($fila = $conexion->registro()){
             $this->fecha=$fila[0];
+
+            $campeonato = new Campeonato($fila[1]);
+            $campeonato->obtenerCampeonatoId();
+            $this->id_campeonato=$campeonato;
         }
         $conexion -> cerrar();
     }

@@ -34,7 +34,7 @@ class Tipo
     public function obtenerTipos(){
         $conexion = new Conexion();
         $tipoDAO = new TipoDAO();
-        $sql = $tipoDAO->obtenerTipo();
+        $sql = $tipoDAO->obtenerTipos();
         $conexion -> abrir();
         $tipos = [];
         $conexion -> ejecutar($sql);
@@ -46,5 +46,18 @@ class Tipo
         $conexion -> cerrar();
         return $tipos;
 
+    }
+
+    public function obtenerTipo(){
+        $conexion = new Conexion();
+        $tipoDAO = new TipoDAO($this->id_tipo);
+        $sql = $tipoDAO->obtenerTipo();
+        $conexion -> abrir();
+        $conexion -> ejecutar($sql);
+        if($fila=$conexion->registro()){
+            $this->nombre= $fila[0];
+        }
+
+        $conexion -> cerrar();
     }
 }

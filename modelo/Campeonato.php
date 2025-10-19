@@ -92,9 +92,17 @@ class Campeonato
         $conexion->abrir();
         $conexion->ejecutar($sql);
         if($fila = $conexion->registro()){
-            $this->id_usuario = $fila[0];
+
+            $usuario=new Usuario($fila[0]);
+            $usuario->obtenerUsuario();
+            $this->id_usuario = $usuario;
+
             $this-> nombre=$fila[1];
-            $this-> id_tipo=$fila[2];
+
+            $tipo=new Tipo($fila[2]);
+            $tipo->obtenerTipo();
+            $this-> id_tipo=$tipo;
+
             $conexion->cerrar();
         }
     }

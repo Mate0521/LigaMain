@@ -20,6 +20,8 @@ include_once 'modelo/Fase.php';
 include_once 'dao/FaseDAO.php';
 include_once 'modelo/Partido.php';
 include_once 'dao/PartidoDAO.php';
+include_once 'modelo/Liga.php';
+include_once 'dao/LigaDAO.php';
 
 
 $pages = [
@@ -31,7 +33,8 @@ $pages = [
     "CrearCamp" => "views/CrearCamp.php",
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
-    "PanelCam" => "views/PanelPartdos.php"
+    "PanelCam" => "views/PanelPartdos.php",
+    "EdicionPartido" => "views/"
 ];
 
 // Página por defecto
