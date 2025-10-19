@@ -34,7 +34,8 @@ $pages = [
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
     "PanelCam" => "views/PanelPartdos.php",
-    "EdicionPartido" => "views/"
+    "EdicionPartido" => "views/",
+    "TablaPos"=>"views/TablaPos.php"
 ];
 
 // Página por defecto
