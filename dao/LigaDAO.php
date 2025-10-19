@@ -19,6 +19,8 @@ class LigaDAO
     }
     public function obtenerLiga()
     {
-        //codigo para obtener una liga de la base de datos
+        return "SELECT `nombre` 
+                FROM `g1_liga` 
+                WHERE `id_liga` = ". $this->id_liga .";";
     }
 }

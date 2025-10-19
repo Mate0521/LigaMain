@@ -149,6 +149,7 @@ class Partido
 
     }
     public function eliminatoria($equipos){
+        
 
     }
     public function mixta($equipos){
@@ -157,7 +158,6 @@ class Partido
 
     public function distribucion($fechas, $calendario){
         $partidos = [];
-        var_dump("apartir de aqui weon", $calendario, "y hasta aqui");
         $id_fase = 1; // fase del todos contra todos
 
 
@@ -185,7 +185,6 @@ class Partido
                 
             }
         }
-        var_dump("pere hasta aqui",$partidos);
         return $this->insertarPartidos($partidos);
 
 
@@ -223,7 +222,30 @@ class Partido
         $conexion -> ejecutar($sql);
 
         while($fila = $conexion -> registro()){
-            $partidos[] = new Partido($fila[0], $fila[1], $fila[2], $fila[3], $fila[4], $fila[5], $fila[6]);
+            
+            $this->id_partido=$fila[0];
+
+            $eq_local=new Equipo($fila[1]);
+            $eq_local->obtenerEquipo();
+            $this->id_eq_local=$eq_local;
+
+            $eq_visit=new Equipo($fila[2]);
+            $eq_visit->obtenerEquipo();
+            $this->id_eq_visit=$eq_visit;
+
+            $fase= new Fase($fila[3]);
+            $fase->obtenerFase();
+            $this->id_fase=$fase;
+
+            $fecha=new Fecha($fila[4]);
+            $fecha->obtenerFecha();
+            $this->id_fecha=$fecha;
+
+            $this->goles_local=$fila[5];
+            $this->goles_visit=$fila[6];
+            
+
+            $partidos[] = new Partido($this->id_partido, $this->id_eq_local, $this->id_eq_visit, $this->id_fase, $this->id_fecha, $this->goles_local, $this->goles_visit);
         }
 
         $conexion -> cerrar();

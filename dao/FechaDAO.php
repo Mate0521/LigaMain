@@ -28,7 +28,7 @@ class FechaDAO
     }
 
     public function obtenerFecha(){
-        return "SELECT `fecha` 
+        return "SELECT `fecha`, `id_campeonato`
                 FROM `g1_fecha` 
                 WHERE `id_fecha` = ". $this->id_fecha .";";
     }
