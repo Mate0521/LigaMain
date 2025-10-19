@@ -12,7 +12,11 @@ $fechas = $fecha->listarFechas();
 
 // Obtener los partidos asociados a esas fechas
 $partidos = $partido->obtenerPartidos($fechas);
+<<<<<<< HEAD
 
+=======
+var_dump("aqui pa ver ", $partidos);
+>>>>>>> origin/fix_feature
 
 //caso en el que no se hayan iniciado los partidos 
 if (!isset($partidos) || empty($partidos)) {
