@@ -12,10 +12,9 @@ if (isset($_POST["actualizar"])) {
     $partido->actualizarResultado();
 
   echo "<script>
-    alert('Resultado guardado correctamente');
-window.location='index.php?pid=PanelPartdos&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "';
-</script>
-header('Location: index.php?pid=PanelPartdos&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "');";
+            alert('Resultado guardado correctamente');
+            hederlocation='index.php?pid=PanelPartdos&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "';
+        </script>";
 
     exit();
 }
@@ -23,7 +22,7 @@ header('Location: index.php?pid=PanelPartdos&id_cam=" . $partido->getIdFecha()->
 
 <div class="container text-center mt-4">
     <h3>Jugar Partido</h3>
-    <form method="POST" class="d-inline-block bg-light text-dark p-4 rounded shadow" >
+    <form method="POST" class="d-inline-block bg-light text-dark p-4 rounded shadow" action="index.php" >
         <input type="hidden" name="id_cam" value="<?php echo $_GET['id_cam']; ?>">
 
         <div class="mb-3">
