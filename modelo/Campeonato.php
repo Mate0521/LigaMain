@@ -149,7 +149,22 @@ class Campeonato
         $conexion -> ejecutar($sql);
 
         while($fila = $conexion -> registro()){
-            $campeonatos[] = new Campeonato($fila[0], $fila[1], $fila[2], $fila[3]);
+
+            $this->id_campeonato=$fila[0];
+            
+            $usuario=new Usuario($fila[1]);
+            $usuario->obtenerUsuario();
+            $this->id_usuario=$usuario;
+
+            $this->nombre=$fila[2];
+
+            $tipo=new Tipo($fila[3]);
+            $tipo->obtenerTipo();
+            $this->id_tipo=$tipo;
+
+
+
+            $campeonatos[] = new Campeonato($this->id_campeonato, $this->id_usuario, $this->nombre, $this->id_tipo);
         }
 
         $conexion -> cerrar();
