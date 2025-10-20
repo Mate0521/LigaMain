@@ -5,8 +5,7 @@ if($_SESSION["role"]!="U"){
 $campeonato = new Campeonato("",$_SESSION["id"]);
 $campeonatos = $campeonato->listarCampeonatos();
 
-var_dump($campeonato);
-var_dump($campeonatos);
+
 
 ?>
 <div>

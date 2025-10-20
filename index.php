@@ -23,7 +23,6 @@ include_once 'dao/PartidoDAO.php';
 include_once 'modelo/Liga.php';
 include_once 'dao/LigaDAO.php';
 
-
 $pages = [
     "Home" => "views/home.php",
     "Login" => "views/Login.php",
@@ -34,7 +33,7 @@ $pages = [
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
     "PanelCam" => "views/PanelPartdos.php",
-    "EdicionPartido" => "views/"
+    "EdicionPartido" => "views/edicionPartido.php"
 ];
 
 // Página por defecto

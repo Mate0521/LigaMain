@@ -1,10 +1,20 @@
 <?php
+
+if (!isset($_GET["id_cam"])) {
+    echo "<div class='alert alert-danger mt-3'>⚠️ No se recibió el ID del campeonato. Vuelve al panel principal.</div>";
+    exit;
+}
+
+$id_campeonato = $_GET["id_cam"];
 $partido = new Partido();
 $equipo = new Equipo();
 $fase = new Fase();
-$fecha = new Fecha("", $_GET["id_cam"]);
-$campeonato = new Campeonato($_GET["id_cam"], $_SESSION["id"]);
+$fecha = new Fecha("", $id_campeonato);
+$campeonato = new Campeonato($id_campeonato, $_SESSION["id"]);
 $campeonato->obtenerCampeonatoId();
+
+$campeonatoDAO = new CampeonatoDAO();
+$tablaPosiciones = $campeonatoDAO->obtenerTablaPosiciones($_GET["id_cam"]);
 
 // Obtener las fechas del campeonato
 $fechas = $fecha->listarFechas();
@@ -12,11 +22,8 @@ $fechas = $fecha->listarFechas();
 
 // Obtener los partidos asociados a esas fechas
 $partidos = $partido->obtenerPartidos($fechas);
-<<<<<<< HEAD
 
-=======
-var_dump("aqui pa ver ", $partidos);
->>>>>>> origin/fix_feature
+
 
 //caso en el que no se hayan iniciado los partidos 
 if (!isset($partidos) || empty($partidos)) {
@@ -26,6 +33,32 @@ if (!isset($partidos) || empty($partidos)) {
     $partidos = $partido->obtenerPartidos($fechas);
 }
 ?>
+
+</table>
+
+    <h3 class="text-center mt-4"> Tabla de Posiciones</h3>
+<table class="table table-striped text-center mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Equipo</th>
+            <th>Puntos</th>
+            <th>Goles a Favor</th>
+            <th>Goles en Contra</th>
+            <th>Diferencia de Gol</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($tablaPosiciones as $fila): ?>
+            <tr>
+                <td><?= $fila['nombre'] ?></td>
+                <td><?= $fila['puntos'] ?></td>
+                <td><?= $fila['goles_favor'] ?></td>
+                <td><?= $fila['goles_contra'] ?></td>
+                <td><?= $fila['diferencia_gol'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 <div>
     <table class="table table-dark table-striped-columns">
@@ -50,11 +83,11 @@ if (!isset($partidos) || empty($partidos)) {
                     <td><?= $partidoOb->getGolesVisit() ?></td>
                     <td><?= $partidoOb->getIdFase()->getNombre() ?></td>
                     <td>
-                            <a href="index.php?pid=EdicionPartido&idPartido="<?php echo $partidoOb->getIdPartido() ?> class="btn btn-success">Jugar Partido</a>
+<a href="index.php?pid=EdicionPartido&idPartido=<?= $partidoOb->getIdPartido() ?>" class="btn btn-success">Jugar Partido</a>
                     </td>
                 </tr>
 
             <?php endforeach; ?>
         </tbody>
-    </table>
+    
 </div>
