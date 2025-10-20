@@ -11,10 +11,11 @@ if (isset($_POST["actualizar"])) {
     $partido->setGolesVisit($golesVisit);
     $partido->actualizarResultado();
 
-  echo "<script>
+    echo "<script>
             alert('Resultado guardado correctamente');
             hederlocation='index.php?pid=PanelPartdos&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "';
         </script>";
+    header("Location:index.php?pid=PanelCam&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "'");
 
     exit();
 }
