@@ -33,8 +33,7 @@ $pages = [
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
     "PanelCam" => "views/PanelPartdos.php",
-    "EdicionPartido" => "views/",
-    "TablaPos"=>"views/TablaPos.php"
+    "TablaPos"=>"views/TablaPos.php",
     "EdicionPartido" => "views/edicionPartido.php"
 ];
 
