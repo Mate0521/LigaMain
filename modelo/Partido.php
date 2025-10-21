@@ -221,44 +221,44 @@ class Partido
     }
 
 
-        // --- Consultar partido por ID ---
-        public function consultar()
-        {
-            $conexion = new Conexion();
-            $conexion->abrir();
-            $partidoDAO=new PartidoDAO($this->id_partido);
+    // --- Consultar partido por ID ---
+    public function consultar()
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $partidoDAO=new PartidoDAO($this->id_partido);
 
-            $sql = $partidoDAO->consultar();
+        $sql = $partidoDAO->consultar();
 
-            $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql);
 
-            if ($conexion->filas() > 0) {
-                $fila = $conexion->registro();
+        if ($conexion->filas() > 0) {
+            $fila = $conexion->registro();
 
-                $this->id_partido = $fila[0];
+            $this->id_partido = $fila[0];
 
-                $eq_local = new Equipo($fila[1]);
-                $eq_local->obtenerEquipo();
-                $this->id_eq_local = $eq_local;
+            $eq_local = new Equipo($fila[1]);
+            $eq_local->obtenerEquipo();
+            $this->id_eq_local = $eq_local;
 
-                $eq_visit = new Equipo($fila[2]);
-                $eq_visit->obtenerEquipo();
-                $this->id_eq_visit = $eq_visit;
+            $eq_visit = new Equipo($fila[2]);
+            $eq_visit->obtenerEquipo();
+            $this->id_eq_visit = $eq_visit;
 
-                $fase = new Fase($fila[3]);
-                $fase->obtenerFase();
-                $this->id_fase = $fase;
+            $fase = new Fase($fila[3]);
+            $fase->obtenerFase();
+            $this->id_fase = $fase;
 
-                $fecha = new Fecha($fila[4]);
-                $fecha->obtenerFecha();
-                $this->id_fecha = $fecha;
+            $fecha = new Fecha($fila[4]);
+            $fecha->obtenerFecha();
+            $this->id_fecha = $fecha;
 
-                $this->goles_local = $fila[5];
-                $this->goles_visit = $fila[6];
-            }
-
-            $conexion->cerrar();
+            $this->goles_local = $fila[5];
+            $this->goles_visit = $fila[6];
         }
+
+        $conexion->cerrar();
+    }
 
     // --- Generar tabla de posiciones (punto 8) ---
 public function generarTablaPosiciones()
