@@ -30,6 +30,12 @@ class CampeonatoDAO
                 FROM `g1_campeonato` 
                 WHERE `id_campeonato` = ". $this->id_campeonato ." ;";
     }
+    public function obtenerCampeonatoUsuario()
+    {
+        return "SELECT  `id_campeonato`
+                FROM `g1_campeonato` 
+                WHERE `id_usuario` = ". $this->id_usuario ." ;";
+    }
     public function valNombre()
     {
        return " SELECT `id_campeonato`
@@ -50,34 +56,44 @@ class CampeonatoDAO
                 FROM `g1_campeonato_equipos` 
                 WHERE `id_campeonato`=". $this->id_campeonato.";";
 
-    }public function obtenerTablaPosiciones($idCampeonato) {
-    $conexion = new Conexion();
-    $conexion->abrir();
-
-    $sql = "SELECT e.nombre, ec.puntuacion, ec.goles_favor, ec.goles_contra,
-                   (ec.goles_favor - ec.goles_contra) AS diferencia_gol
-            FROM g1_campeonato_equipos ec
-            INNER JOIN g1_equipo e ON ec.id_equipo = e.id_equipo
-            WHERE ec.id_campeonato = $idCampeonato
-            ORDER BY ec.puntuacion DESC, ec.goles_favor DESC, diferencia_gol DESC";
-
-    // Ejecutar la consulta
-    $conexion->ejecutar($sql);
-
-    $tabla = [];
-    while ($fila = $conexion->registro()) {
-        $tabla[] = [
-            'nombre' => $fila[0],
-            'puntos' => $fila[1],
-            'goles_favor' => $fila[2],
-            'goles_contra' => $fila[3],
-            'diferencia_gol' => $fila[4]
-        ];
+    }
+    public function eliminarRelacionEquipos(){
+        return "DELETE FROM `g1_campeonato_equipos` 
+                WHERE `id_campeonato`=". $this->id_campeonato .";";
+    }
+    public function eliminarCampeonato(){
+        return "DELETE FROM `g1_campeonato` 
+                WHERE `id_campeonato` =". $this->id_campeonato .";";
     }
 
-    $conexion->cerrar();
-    return $tabla;
-}
+    public function obtenerTablaPosiciones($idCampeonato) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+
+        $sql = "SELECT e.nombre, ec.puntuacion, ec.goles_favor, ec.goles_contra,
+                    (ec.goles_favor - ec.goles_contra) AS diferencia_gol
+                FROM g1_campeonato_equipos ec
+                INNER JOIN g1_equipo e ON ec.id_equipo = e.id_equipo
+                WHERE ec.id_campeonato = $idCampeonato
+                ORDER BY ec.puntuacion DESC, ec.goles_favor DESC, diferencia_gol DESC";
+
+        // Ejecutar la consulta
+        $conexion->ejecutar($sql);
+
+        $tabla = [];
+        while ($fila = $conexion->registro()) {
+            $tabla[] = [
+                'nombre' => $fila[0],
+                'puntos' => $fila[1],
+                'goles_favor' => $fila[2],
+                'goles_contra' => $fila[3],
+                'diferencia_gol' => $fila[4]
+            ];
+        }
+
+        $conexion->cerrar();
+        return $tabla;
+    }
 
 
 

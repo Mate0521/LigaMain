@@ -35,7 +35,8 @@ $pages = [
     "PanelCam" => "views/PanelPartdos.php",
     "TablaPos"=>"views/TablaPos.php",
     "EdicionPartido" => "views/edicionPartido.php",
-    "CrearEquipo" => "views/CrearEquipo.php"
+    "CrearEquipo" => "views/CrearEquipo.php",
+    "EliminarUser" => "views/EliminarUsuario.php"
 ];
 
 // Página por defecto
@@ -61,6 +62,7 @@ if (isset($_POST["newCliente"])) {
     <title>LigaMain</title>
      <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body class="bg-dark text-light">
@@ -78,8 +80,6 @@ if (isset($_POST["newCliente"])) {
     <div class="container mt-4 text-center">
 
         <?php
-            var_dump($_GET);
-            var_dump($_SESSION);
 
             if (array_key_exists($page, $pages)) {
                 include($pages[$page]);

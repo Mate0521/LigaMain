@@ -32,4 +32,9 @@ class FechaDAO
                 FROM `g1_fecha` 
                 WHERE `id_fecha` = ". $this->id_fecha .";";
     }
+
+    public function eliminarFechas(){
+        return "DELETE FROM `g1_fecha` 
+                WHERE `id_campeonato`=". $this->id_campeonato ." ;";
+    }
 }

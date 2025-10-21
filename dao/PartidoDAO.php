@@ -77,6 +77,11 @@ class PartidoDAO
         $conexion->cerrar();
     }
 
+    public function eliminarPartidos($fechas){
+        return "DELETE FROM `g1_partido` 
+                WHERE `id_fecha` IN (". $fechas .");";
+    }
+
 
 }
 ?>
