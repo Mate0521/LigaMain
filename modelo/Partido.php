@@ -1,10 +1,4 @@
 <?php
-require_once 'config/conexion.php';
-require_once 'dao/PartidoDAO.php';
-require_once 'modelo/Equipo.php';
-require_once 'modelo/Fase.php';
-require_once 'modelo/Fecha.php';
-
 class Partido
 {
     // --- Atributos ---
@@ -29,22 +23,50 @@ class Partido
     }
 
     // --- Getters ---
-    public function getIdPartido() { return $this->id_partido; }
-    public function getIdEqLocal() { return $this->id_eq_local; }
-    public function getIdEqVisit() { return $this->id_eq_visit; }
-    public function getIdFase() { return $this->id_fase; }
-    public function getIdFecha() { return $this->id_fecha; }
-    public function getGolesLocal() { return $this->goles_local; }
-    public function getGolesVisit() { return $this->goles_visit; }
+    public function getIdPartido() { 
+        return $this->id_partido; 
+    }
+    public function getIdEqLocal() { 
+        return $this->id_eq_local; 
+    }
+    public function getIdEqVisit() { 
+        return $this->id_eq_visit; 
+    }
+    public function getIdFase() { 
+        return $this->id_fase; 
+    }
+    public function getIdFecha() { 
+        return $this->id_fecha; 
+    }
+    public function getGolesLocal() { 
+        return $this->goles_local; 
+    }
+    public function getGolesVisit() { 
+        return $this->goles_visit; 
+    }
 
     // --- Setters ---
-    public function setIdPartido($id_partido) { $this->id_partido = $id_partido; }
-    public function setIdEqLocal($id_eq_local) { $this->id_eq_local = $id_eq_local; }
-    public function setIdEqVisit($id_eq_visit) { $this->id_eq_visit = $id_eq_visit; }
-    public function setIdFase($id_fase) { $this->id_fase = $id_fase; }
-    public function setIdFecha($id_fecha) { $this->id_fecha = $id_fecha; }
-    public function setGolesLocal($goles_local) { $this->goles_local = $goles_local; }
-    public function setGolesVisit($goles_visit) { $this->goles_visit = $goles_visit; }
+    public function setIdPartido($id_partido) { 
+        $this->id_partido = $id_partido; 
+    }
+    public function setIdEqLocal($id_eq_local) { 
+        $this->id_eq_local = $id_eq_local; 
+    }
+    public function setIdEqVisit($id_eq_visit) { 
+        $this->id_eq_visit = $id_eq_visit; 
+    }
+    public function setIdFase($id_fase) { 
+        $this->id_fase = $id_fase; 
+    }
+    public function setIdFecha($id_fecha) {
+        $this->id_fecha = $id_fecha; 
+    }
+    public function setGolesLocal($goles_local) { 
+        $this->goles_local = $goles_local; 
+    }
+    public function setGolesVisit($goles_visit) { 
+        $this->goles_visit = $goles_visit; 
+    }
 
     // --- Crear distribución según tipo de torneo ---
     public function crearDistribucion($equipos, $tipo, $fechas)
@@ -54,10 +76,10 @@ class Partido
                 $this->distribucion($fechas, $this->todosContraTodos($equipos));
                 break;
             case 2:
-                $this->eliminatoria($equipos);
+                $this->eliminatoria();
                 break;
             case 3:
-                $this->mixta($equipos);
+                $this->mixta();
                 break;
             default:
                 echo "Tipo de torneo no válido.";
@@ -98,8 +120,12 @@ class Partido
         return $calendario;
     }
 
-    public function eliminatoria($equipos) {}
-    public function mixta($equipos) {}
+    public function eliminatoria() {
+
+    }
+    public function mixta() {
+
+    }
 
     // --- Distribución en fechas ---
     public function distribucion($fechas, $calendario)
@@ -261,41 +287,41 @@ class Partido
     }
 
     // --- Generar tabla de posiciones (punto 8) ---
-public function generarTablaPosiciones()
-{
-    $conexion = new Conexion();
-    $conexion->abrir();
-    $sql = "
-        SELECT 
-            e.id_equipo,
-            e.nombre,
-            e.puntos,
-            e.goles_favor,
-            e.goles_contra,
-            (e.goles_favor - e.goles_contra) AS diferencia
-        FROM g1_equipo e
-        ORDER BY 
-            e.puntos DESC,
-            diferencia DESC,
-            e.goles_favor DESC
-    ";
-    $conexion->ejecutar($sql);
+    public function generarTablaPosiciones()
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "
+            SELECT 
+                e.id_equipo,
+                e.nombre,
+                e.puntos,
+                e.goles_favor,
+                e.goles_contra,
+                (e.goles_favor - e.goles_contra) AS diferencia
+            FROM g1_equipo e
+            ORDER BY 
+                e.puntos DESC,
+                diferencia DESC,
+                e.goles_favor DESC
+        ";
+        $conexion->ejecutar($sql);
 
-    $tabla = [];
-    while ($fila = $conexion->registro()) {
-        $tabla[] = [
-            'id_equipo' => $fila['id_equipo'],
-            'nombre' => $fila['nombre'],
-            'puntos' => $fila['puntos'],
-            'goles_favor' => $fila['goles_favor'],
-            'goles_contra' => $fila['goles_contra'],
-            'diferencia' => $fila['diferencia']
-        ];
+        $tabla = [];
+        while ($fila = $conexion->registro()) {
+            $tabla[] = [
+                'id_equipo' => $fila['id_equipo'],
+                'nombre' => $fila['nombre'],
+                'puntos' => $fila['puntos'],
+                'goles_favor' => $fila['goles_favor'],
+                'goles_contra' => $fila['goles_contra'],
+                'diferencia' => $fila['diferencia']
+            ];
+        }
+
+        $conexion->cerrar();
+        return $tabla;
     }
-
-    $conexion->cerrar();
-    return $tabla;
-}
 
 }
 ?>
