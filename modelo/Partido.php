@@ -145,8 +145,8 @@ class Partido
     }
 
     // --- Obtener Partidos ---
-    public function obtenerPartidos($fechas)
-    {
+    public function obtenerPartidos($fechas){
+
         $conexion = new Conexion();
         $conexion->abrir();
         $partidoDAO = new PartidoDAO();
@@ -200,31 +200,31 @@ class Partido
 
     // --- Actualizar resultado y puntos (punto 7) ---
     public function actualizarResultado() {
-    $partidoDAO = new PartidoDAO();
+        $partidoDAO = new PartidoDAO();
 
-    // Actualizar los goles del partido
-    $partidoDAO->actualizarResultado($this);
+        // Actualizar los goles del partido
+        $partidoDAO->actualizarResultado($this); 
 
-    $golesLocal = $this->getGolesLocal();
-    $golesVisit = $this->getGolesVisit();
+        $golesLocal = $this->getGolesLocal();
+        $golesVisit = $this->getGolesVisit();
 
-    $idLocal = $this->getIdEqLocal()->getIdEquipo();
-    $idVisit = $this->getIdEqVisit()->getIdEquipo();
+        $idLocal = $this->getIdEqLocal()->getIdEquipo();
+        $idVisit = $this->getIdEqVisit()->getIdEquipo();
 
-    if ($golesLocal > $golesVisit) {
-        // Gana el local
-        $partidoDAO->actualizarPuntos($idLocal, 3, $golesLocal, $golesVisit);
-        $partidoDAO->actualizarPuntos($idVisit, 0, $golesVisit, $golesLocal);
-    } elseif ($golesLocal < $golesVisit) {
-        // Gana el visitante
-        $partidoDAO->actualizarPuntos($idLocal, 0, $golesLocal, $golesVisit);
-        $partidoDAO->actualizarPuntos($idVisit, 3, $golesVisit, $golesLocal);
-    } else {
-        // Empate
-        $partidoDAO->actualizarPuntos($idLocal, 1, $golesLocal, $golesVisit);
-        $partidoDAO->actualizarPuntos($idVisit, 1, $golesVisit, $golesLocal);
+        if ($golesLocal > $golesVisit) {
+            // Gana el local
+            $partidoDAO->actualizarPuntos($idLocal, 3, $golesLocal, $golesVisit);
+            $partidoDAO->actualizarPuntos($idVisit, 0, $golesVisit, $golesLocal);
+        } elseif ($golesLocal < $golesVisit) {
+            // Gana el visitante
+            $partidoDAO->actualizarPuntos($idLocal, 0, $golesLocal, $golesVisit);
+            $partidoDAO->actualizarPuntos($idVisit, 3, $golesVisit, $golesLocal);
+        } else {
+            // Empate
+            $partidoDAO->actualizarPuntos($idLocal, 1, $golesLocal, $golesVisit);
+            $partidoDAO->actualizarPuntos($idVisit, 1, $golesVisit, $golesLocal);
+        }
     }
-}
 
 
     // --- Consultar partido por ID ---

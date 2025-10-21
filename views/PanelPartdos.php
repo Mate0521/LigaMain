@@ -57,7 +57,7 @@ if (!isset($partidos) || empty($partidos)) {
                     <td><?= $partidoOb->getGolesVisit() ?></td>
                     <td><?= $partidoOb->getIdFase()->getNombre() ?></td>
                     <td>
-<a href="index.php?pid=EdicionPartido&idPartido=<?= $partidoOb->getIdPartido() ?>" class="btn btn-success">Jugar Partido</a>
+                        <a href="index.php?pid=EdicionPartido&idPartido=<?= $partidoOb->getIdPartido() ?>" class="btn btn-success">Jugar Partido</a>
                     </td>
                 </tr>
 
