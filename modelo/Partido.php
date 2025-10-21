@@ -68,10 +68,11 @@ class Partido
         $this->goles_visit = $goles_visit; 
     }
 
+
     // --- Crear distribución según tipo de torneo ---
     public function crearDistribucion($equipos, $tipo, $fechas)
     {
-        switch ($tipo) {
+        switch ($tipo->getIdTipo()) {
             case 1:
                 $this->distribucion($fechas, $this->todosContraTodos($equipos));
                 break;
@@ -321,6 +322,26 @@ class Partido
 
         $conexion->cerrar();
         return $tabla;
+    }
+
+    public function eliminarPartidos($fechas){
+        $conexion = new Conexion();
+        $partidoDAO =new PartidoDAO();
+
+        $id_fechas = [];
+        foreach ($fechas as $fecha) {
+            $id_fechas[] = $fecha->getIdFecha();
+        }
+        $id_fechas = implode(',', $id_fechas);
+
+        $sql=$partidoDAO->eliminarPartidos($id_fechas);
+        $conexion->abrir();
+        try{
+            $conexion->ejecutar($sql);
+            $conexion->cerrar();
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
     }
 
 }

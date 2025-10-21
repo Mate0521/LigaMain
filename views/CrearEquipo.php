@@ -1,11 +1,11 @@
 <?php
-// --- Variables de control de validación ---
+
 $nombreValido = null;
 $ligaValida = null;
 $imagenValida = null;
 $mensajeGeneral = null;
 
-// --- Listar ligas disponibles ---
+
 $liga = new Liga();
 $ligas = $liga->listarLigas();
 
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
     $idLiga = $_POST['liga'] ?? null;
     $img = trim($_POST['imagen'] ?? '');
 
-    $equipo = new Equipo("", $nombre, $img, $idLiga);
+    $equipo = new Equipo("", $nombre,  $idLiga, $img,);
 
     // Validaciones
     $nombreValido = $equipo->validarNombre();

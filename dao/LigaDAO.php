@@ -23,4 +23,8 @@ class LigaDAO
                 FROM `g1_liga` 
                 WHERE `id_liga` = ". $this->id_liga .";";
     }
+    public function listarLigas(){
+        return "SELECT `id_liga`, `nombre` 
+                FROM `g1_liga` ";
+    }
 }

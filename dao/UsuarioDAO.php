@@ -36,4 +36,12 @@ class UsuarioDAO
                 WHERE `id_usuario` = ". $this->id_usuario .";";
     }
 
+    public function eliminarUsuario(){
+        return "DELETE FROM `g1_usuario` 
+                WHERE `id_usuario`=". $this -> id_usuario .";";
+    }
+    public function listarUsuarios(){
+        return  "SELECT `id_usuario`, `nombre`, `correo` 
+                FROM `g1_usuario`";
+    }
 }

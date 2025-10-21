@@ -106,9 +106,40 @@ class Campeonato
             $conexion->cerrar();
         }
     }
+    public function obtenerCampeonatoIdUsuario()
+    {
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario);
+        $sql = $campeonatoDAO->obtenerCampeonatoUsuario();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        while($fila = $conexion -> registro()){
+            $campeonatos[]= $fila[0];
+        }
+        $conexion->cerrar();
+        return $campeonatos;
+    }
     public function eliminarCampeonato()
     {
-        //codigo para eliminar un campeonato de la base de datos
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        //primero eliminar los equipos y fechas relacionacionados con este 
+        $sql=$campeonatoDAO->eliminarRelacionEquipos();
+        $conexion->abrir();
+        try{
+            $conexion->ejecutar($sql);
+            //ahora eliminar la relacion con las fechas 
+            $fecha=new Fecha("",$this->id_campeonato);
+            $fecha->eliminarFechas();
+            //ya sin relacion alguna elminamos el campeonato
+            $sql = $campeonatoDAO->eliminarCampeonato();
+            $conexion->ejecutar($sql);
+        }catch(Exception $e){
+            return $e;
+        }
+        
+
+
     }
     public function validarNombre()
     {

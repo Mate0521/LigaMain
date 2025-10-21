@@ -41,4 +41,18 @@ class Liga
         }
         $conexion -> cerrar();
     }
+    public function listarLigas(){
+        $conexion = new Conexion();
+        $ligaDAO = new LigaDAO();
+        $sql = $ligaDAO->listarLigas();
+        $conexion -> abrir();
+        $conexion -> ejecutar($sql);
+        $ligas=[];
+        while($fila = $conexion -> registro()){
+            $ligas[] = new Liga($fila[0], $fila[1]);
+        }
+        $conexion -> cerrar();
+        return $ligas;
+
+    }
 }

@@ -58,8 +58,18 @@ class Equipo
     
     public function crearEquipo()
     {
-        //codigo para crear un equipo en la base de datos
+        $conexion = new Conexion();
+        $conexion -> abrir();
+        $equipopDAO = new EquipoDAO("", $this -> nombre, $this->id_liga, $this->img);
+        try{
+            $conexion -> ejecutar($equipopDAO ->crearEquipo());
+            $conexion -> cerrar();
+            return true;
+        }catch(Exception $e){
+            return $e;
+        }
     }
+
     public function obtenerEquipo()
     {
         $conexion = new Conexion();
@@ -79,14 +89,6 @@ class Equipo
         
 
     }
-    public function actualizarEquipo()
-    {
-        //codigo para actualizar un equipo en la base de datos
-    }
-    public function eliminarEquipo()
-    {
-        //codigo para eliminar un equipo de la base de datos
-    }
     public function listarEquipos()
     {
         $conexion = new Conexion();
@@ -104,4 +106,15 @@ class Equipo
         return $equipos;
     }
 
+    public function validarNombre(){
+        $conexion = new Conexion();
+        $equipoDAO = new EquipoDAO("", $this->nombre, $this->id_liga);
+        $sql = $equipoDAO->validarNombre();
+        $conexion->abrir();
+        $conexion -> ejecutar($sql);
+        $fila = $conexion -> registro();
+        $conexion->cerrar();
+        return !$fila[0];
+
+    }
 }

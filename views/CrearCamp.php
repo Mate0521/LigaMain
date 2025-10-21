@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
         $mensajeGeneral = "Corrija los errores en las secciones indicadas.";
     }
 }
-//TODO perfeccionar presentacion card de seleccion de quipos
  
 ?>
 

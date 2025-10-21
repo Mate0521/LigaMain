@@ -87,4 +87,26 @@ class Fecha
         }
         $conexion -> cerrar();
     }
+
+    public function eliminarFechas(){
+        $conexion = new Conexion();
+        $fechaDAO = new FechaDAO("", $this->id_campeonato);
+        //primero se debe de eliminar la relacion con los partidos 
+        //previamente debemostener listas los ids de las fechas 
+        $fechas=$this->listarFechas();
+        //llamado a los partidos
+        $partido = new Partido();
+        $partido->eliminarPartidos($fechas);
+        //ahora sin relacion alguna eliminamos las fechas 
+        $sql=$fechaDAO->eliminarFechas();
+        $conexion -> abrir();
+        try{
+            $conexion -> ejecutar($sql);
+            $conexion->cerrar();
+        }catch(Exception $e){
+            return $e;
+        }
+
+
+    }
 }

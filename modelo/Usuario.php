@@ -96,5 +96,42 @@ class Usuario
         }
         return false;
     }
+    public function eliminarUsuario(){
+        $conexion = new Conexion();
+        $usuarioDAO = new UsuarioDAO($this->id_usuario);
+        try{
+            //primero traem,os los campeonatos que tegan relacion con este usuario
+            $campeonato =new Campeonato("",$this->id_usuario);
+            $campeonatos=$campeonato->obtenerCampeonatoIdUsuario();
+            //elminamos uno por los campeonatos del usuario 
+            foreach ($campeonatos as $camp) {
+                $campeonatoOb=new Campeonato($camp);
+                $campeonatoOb->eliminarCampeonato();
+            }
+            //una vez eliminados eliminamos al usaurio
+            $sql = $usuarioDAO->eliminarUsuario();
+            $conexion->abrir();
+            $conexion->ejecutar($sql);
+            $conexion->cerrar();
+        }catch(Exception $e){
+            return $e;
+        }
+
+    }
+
+    public function listarUsuarios(){
+        $conexion = new Conexion();
+        $usuarioDAO = new UsuarioDAO();
+        $sql = $usuarioDAO->listarUsuarios();
+        $conexion->abrir();
+        $conexion->ejecutar($sql);
+        $usuariods=[];
+
+        while($fila=$conexion->registro()){
+            $usuariods[]=new Usuario($fila[0],$fila[1],$fila[2]);
+        }
+        $conexion->cerrar();
+        return $usuariods;
+    }
 
 }

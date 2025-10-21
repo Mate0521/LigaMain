@@ -38,10 +38,7 @@ if(isset($_SESSION["role"])){
                         <a class="nav-link" aria-current="page" href="index.php?pid=CrearEquipo">Crear Equipos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?pid=CrearCamp"><i class="bi bi-database-add"></i>Eliminar Equipo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?pid=EliminarCamp"><i class="bi bi-trash3"></i>Eliminar Usuario</a>
+                        <a class="nav-link" href="index.php?pid=EliminarUser"><i class="bi bi-trash3"></i>Eliminar Usuario</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
