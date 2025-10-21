@@ -1,10 +1,5 @@
 <?php
 
-if (!isset($_GET["id_cam"])) {
-    echo "<div class='alert alert-danger mt-3'>⚠️ No se recibió el ID del campeonato. Vuelve al panel principal.</div>";
-    exit;
-}
-
 $id_campeonato = $_GET["id_cam"];
 $partido = new Partido();
 $equipo = new Equipo();

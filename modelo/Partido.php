@@ -204,62 +204,61 @@ class Partido
 
         // Actualizar los goles del partido
         $partidoDAO->actualizarResultado(); 
-        
-        if ($golesLocal > $golesVisit) {
+
+        if ($this->goles_local > $this->goles_visit) {
             // Gana el local
-            $partidoDAO->actualizarPuntos($idLocal, 3, $golesLocal, $golesVisit);
-            $partidoDAO->actualizarPuntos($idVisit, 0, $golesVisit, $golesLocal);
-        } elseif ($golesLocal < $golesVisit) {
+            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 3, $this->goles_local, $this->goles_visit);
+            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 0, $this->goles_visit, $this->goles_local);
+        } elseif ($this->goles_local < $this->goles_visit) {
             // Gana el visitante
-            $partidoDAO->actualizarPuntos($idLocal, 0, $golesLocal, $golesVisit);
-            $partidoDAO->actualizarPuntos($idVisit, 3, $golesVisit, $golesLocal);
+            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 0, $this->goles_local, $this->goles_visit);
+            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 3, $this->goles_visit, $this->goles_local);
         } else {
             // Empate
-            $partidoDAO->actualizarPuntos($idLocal, 1, $golesLocal, $golesVisit);
-            $partidoDAO->actualizarPuntos($idVisit, 1, $golesVisit, $golesLocal);
+            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 1, $this->goles_local, $this->goles_visit);
+            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 1, $this->goles_visit, $this->goles_local);
         }
     }
 
 
-    // --- Consultar partido por ID ---
-    public function consultar()
-    {
-        $conexion = new Conexion();
-        $conexion->abrir();
+        // --- Consultar partido por ID ---
+        public function consultar()
+        {
+            $conexion = new Conexion();
+            $conexion->abrir();
+            $partidoDAO=new PartidoDAO($this->id_partido);
 
-        $sql = "SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
-                FROM g1_partido 
-                WHERE id_partido = " . $this->id_partido;
+            $sql = $partidoDAO->consultar();
 
-        $conexion->ejecutar($sql);
+            $conexion->ejecutar($sql);
 
-        if ($conexion->filas() > 0) {
-            $fila = $conexion->registro();
+            if ($conexion->filas() > 0) {
+                $fila = $conexion->registro();
 
-            $this->id_partido = $fila[0];
+                $this->id_partido = $fila[0];
 
-            $eq_local = new Equipo($fila[1]);
-            $eq_local->obtenerEquipo();
-            $this->id_eq_local = $eq_local;
+                $eq_local = new Equipo($fila[1]);
+                $eq_local->obtenerEquipo();
+                $this->id_eq_local = $eq_local;
 
-            $eq_visit = new Equipo($fila[2]);
-            $eq_visit->obtenerEquipo();
-            $this->id_eq_visit = $eq_visit;
+                $eq_visit = new Equipo($fila[2]);
+                $eq_visit->obtenerEquipo();
+                $this->id_eq_visit = $eq_visit;
 
-            $fase = new Fase($fila[3]);
-            $fase->obtenerFase();
-            $this->id_fase = $fase;
+                $fase = new Fase($fila[3]);
+                $fase->obtenerFase();
+                $this->id_fase = $fase;
 
-            $fecha = new Fecha($fila[4]);
-            $fecha->obtenerFecha();
-            $this->id_fecha = $fecha;
+                $fecha = new Fecha($fila[4]);
+                $fecha->obtenerFecha();
+                $this->id_fecha = $fecha;
 
-            $this->goles_local = $fila[5];
-            $this->goles_visit = $fila[6];
+                $this->goles_local = $fila[5];
+                $this->goles_visit = $fila[6];
+            }
+
+            $conexion->cerrar();
         }
-
-        $conexion->cerrar();
-    }
 
     // --- Generar tabla de posiciones (punto 8) ---
 public function generarTablaPosiciones()

@@ -39,18 +39,11 @@ class PartidoDAO
     }
 
     // Consultar partido individual
-    public function consultar($id_partido)
+    public function consultar()
     {
-        $conexion = new Conexion();
-        $conexion->abrir();
-        $sql = "SELECT * FROM g1_partido WHERE id_partido = $id_partido";
-        $conexion->ejecutar($sql);
-        $resultado = null;
-        if ($conexion->filas() > 0) {
-            $resultado = $conexion->registro();
-        }
-        $conexion->cerrar();
-        return $resultado;
+        return "SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
+                FROM g1_partido 
+                WHERE id_partido = " . $this->id_partido.";";
     }
 
         // Actualizar resultado
