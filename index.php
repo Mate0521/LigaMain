@@ -23,7 +23,6 @@ include_once 'dao/PartidoDAO.php';
 include_once 'modelo/Liga.php';
 include_once 'dao/LigaDAO.php';
 
-
 $pages = [
     "Home" => "views/home.php",
     "Login" => "views/Login.php",
@@ -34,7 +33,9 @@ $pages = [
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
     "PanelCam" => "views/PanelPartdos.php",
-    "EdicionPartido" => "views/"
+    "TablaPos"=>"views/TablaPos.php",
+    "EdicionPartido" => "views/edicionPartido.php",
+    "CrearEquipo" => "views/CrearEquipo.php"
 ];
 
 // Página por defecto
@@ -58,6 +59,7 @@ if (isset($_POST["newCliente"])) {
 <head>
     <meta charset="UTF-8">
     <title>LigaMain</title>
+     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>

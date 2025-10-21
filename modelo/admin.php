@@ -54,10 +54,6 @@ class Admin
 
     //metodos de crud de admin
     
-    public function crearAdmin()
-    {
-        //codigo para crear un admin en la base de datos
-    }
     public function autenticarAdmin()
     {
         $conexion = new Conexion();
