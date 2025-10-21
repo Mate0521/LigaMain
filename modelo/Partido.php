@@ -200,17 +200,11 @@ class Partido
 
     // --- Actualizar resultado y puntos (punto 7) ---
     public function actualizarResultado() {
-        $partidoDAO = new PartidoDAO();
+        $partidoDAO = new PartidoDAO($this->id_partido, "", "", "", "", $this->goles_local, $this->goles_visit );
 
         // Actualizar los goles del partido
-        $partidoDAO->actualizarResultado($this); 
-
-        $golesLocal = $this->getGolesLocal();
-        $golesVisit = $this->getGolesVisit();
-
-        $idLocal = $this->getIdEqLocal()->getIdEquipo();
-        $idVisit = $this->getIdEqVisit()->getIdEquipo();
-
+        $partidoDAO->actualizarResultado(); 
+        
         if ($golesLocal > $golesVisit) {
             // Gana el local
             $partidoDAO->actualizarPuntos($idLocal, 3, $golesLocal, $golesVisit);

@@ -1,5 +1,4 @@
 <?php
-require_once 'config/conexion.php';
 
 class PartidoDAO
 {
@@ -54,40 +53,36 @@ class PartidoDAO
         return $resultado;
     }
 
-    // Actualizar resultado
-public function actualizarResultado($partido)
-{
-    $conexion = new Conexion();
-    $conexion->abrir();
+        // Actualizar resultado
+    public function actualizarResultado()
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
 
-    $idPartido = $partido->getIdPartido();
-    $golesLocal = $partido->getGolesLocal();
-    $golesVisit = $partido->getGolesVisit();
+        $sql = "UPDATE g1_partido 
+                SET goles_local = ". $this->goles_local.", goles_visit = ". $this->goles_visit ." 
+                WHERE id_partido = ". $this->id_partido;
 
-    $sql = "UPDATE g1_partido 
-            SET goles_local = $golesLocal, goles_visit = $golesVisit 
-            WHERE id_partido = $idPartido";
-
-    $conexion->ejecutar($sql);
-    $conexion->cerrar();
-}
+        $conexion->ejecutar($sql);
+        $conexion->cerrar();
+    }
 
 
     public function actualizarPuntos($idEquipo, $puntos, $golesFavor, $golesContra)
-{
-    $conexion = new Conexion();
-    $conexion->abrir();
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
 
-    // Suma los puntos y los goles en la tabla campeonato_equipos
-    $sql = "UPDATE g1_campeonato_equipos 
-            SET puntuacion = puntuacion + $puntos,
-                goles_favor = goles_favor + $golesFavor,
-                goles_contra = goles_contra + $golesContra
-            WHERE id_equipo = $idEquipo";
+        // Suma los puntos y los goles en la tabla campeonato_equipos
+        $sql = "UPDATE g1_campeonato_equipos 
+                SET puntuacion = puntuacion + $puntos,
+                    goles_favor = goles_favor + $golesFavor,
+                    goles_contra = goles_contra + $golesContra
+                WHERE id_equipo = $idEquipo";
 
-    $conexion->ejecutar($sql);
-    $conexion->cerrar();
-}
+        $conexion->ejecutar($sql);
+        $conexion->cerrar();
+    }
 
 
 }

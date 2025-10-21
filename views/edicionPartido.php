@@ -14,7 +14,7 @@ if (isset($_POST["actualizar"])) {
     echo "<script>
             alert('Resultado guardado correctamente');
         </script>";
-    header("Location:index.php?pid=PanelCam&id_cam=" . $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "'");
+    header("Location:index.php?pid=PanelCam&id_cam=". $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato());
 
     exit();
 }
