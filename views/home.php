@@ -8,32 +8,41 @@ $campeonatos = $campeonato->listarCampeonatos();
 
 
 ?>
-<div>
-<div class="container py-5">
-    <div class="row align-items-center min-vh-100">
 
-        <div class="col-md-12 col-xl-6 text-light d-flex flex-column justify-content-center align-items-center text-center">
-            <h1 class="fw-bold mb-3">Bienvenido a Liga Main</h1>
-            <p class="lead">Tu plataforma para gestionar ligas deportivas de manera eficiente y sencilla.</p>
+
+ <!-- hacemos un row con dos columnas, una de bienvenida y otra con los campeonatos -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #0d6efd 0%, #0b132b 100%); min-height: 100vh;">
+    
+    <div class="row align-items-center justify-content-center text-light text-center">
+        <div class="col-md-12 col-xl-5 mb-5 mb-xl-0">
+            <h1 class="fw-bold display-5"> Bienvenido a <span class="text-warning">Liga Main</span></h1>
+            <p class="lead mt-3 mb-4">
+                Administra tus <strong>ligas, campeonatos y partidos</strong> con facilidad.  
+                Organiza, visualiza y compite desde un solo lugar.
+            </p>
+            <hr class="border-light w-50 mx-auto">
         </div>
 
-        <div class="col-md-12 col-xl-6 mt-4 mt-xl-0">
-            <div class="overflow-auto">
+        <div class="col-md-12 col-xl-6">
+            <div class="overflow-auto px-2" style="max-height: 75vh;">
                 <?php foreach ($campeonatos as $campeonato): ?>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="card-header bg-dark text-white">
+                    <div class="card mb-4 border-0 shadow-lg rounded-4 animate__animated animate__fadeInUp">
+                        <div class="card-header bg-dark text-white fw-bold">
                             <?php echo htmlspecialchars($campeonato->getNombre()); ?>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">
+                            <h5 class="card-title text-primary fw-semibold mb-3">
                                 <?php echo htmlspecialchars($campeonato->getIdTipo()->getNombre()); ?>
                             </h5>
-                            <div class="text-center mt-3">
-                                <a href="index.php?pid=PanelCam&id_cam=<?php echo $campeonato->getIdCampeonato(); ?>" class="btn btn-success me-2">
-                                    <i class="bi bi-pencil-square"></i> Jugar Partidos
+
+                            <div class="text-center">
+                                <a href="index.php?pid=PanelCam&id_cam=<?php echo $campeonato->getIdCampeonato(); ?>"
+                                   class="btn btn-success me-2 shadow-sm px-4">
+                                    <i class="bi bi-controller"></i> Jugar Partidos
                                 </a>
-                                <a href="index.php?pid=TablaPos&id_cam=<?php echo $campeonato->getIdCampeonato(); ?>" class="btn btn-primary">
-                                    <i class="bi bi-table"></i> Ver Tabla de Posiciones
+                                <a href="index.php?pid=TablaPos&id_cam=<?php echo $campeonato->getIdCampeonato(); ?>"
+                                   class="btn btn-outline-primary shadow-sm px-4">
+                                    <i class="bi bi-table"></i> Ver Tabla
                                 </a>
                             </div>
                         </div>

@@ -1,25 +1,45 @@
 <?php
-
 $partido = new Partido($_GET["idPartido"]);
-$partido->consultar(); // obtiene toda la info del partido
+$partido->consultar(); // obtiene los goles actuales
 
 if (isset($_POST["actualizar"])) {
     $golesLocal = $_POST["golesLocal"];
     $golesVisit = $_POST["golesVisitante"];
 
-    $partido->setGolesLocal($golesLocal);
-    $partido->setGolesVisit($golesVisit);
+     //primer condicional que valida que sean numeros enteros y no negativos ni decimales, es cmo un stp--streamcompareiton
+    if (!is_numeric($golesLocal) || !is_numeric($golesVisit) || $golesLocal < 0 || $golesVisit < 0) {
+        echo "<script>
+                alert('Los goles deben ser números positivos.');
+                window.history.back();
+              </script>";
+        exit();
+    }
+
+    $golesLocalActual = $partido->getGolesLocal();
+    $golesVisitActual = $partido->getGolesVisit();
+
+    // segunda condicional que validar que no disminuya mas de 2 goles, por si se llegase a aunlar solo un gol
+    if (($golesLocalActual - $golesLocal) > 2 || ($golesVisitActual - $golesVisit) > 2) {
+        echo "<script>
+                alert('No puedes reducir los goles en más de 2 respecto al valor actual.');
+                window.history.back();
+              </script>";
+        exit();
+    }
+//ya aqui hace el seteo y actualiza
+    $partido->setGolesLocal((int)$golesLocal);
+    $partido->setGolesVisit((int)$golesVisit);
     $partido->actualizarResultado();
 
     echo "<script>
             alert('Resultado guardado correctamente');
             window.location.href = 'index.php?pid=PanelCam&id_cam=" . 
                 $partido->getIdFecha()->getIdCampeonato()->getIdCampeonato() . "';
-        </script>";
+          </script>";
     exit();
-
 }
 ?>
+
 
 <div class="container text-center mt-4">
     <h3>Jugar Partido</h3>
