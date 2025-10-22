@@ -78,8 +78,10 @@ $campeonatos = $camp->listarCampeonatosAll();
 			</div>
 		</div>
   	</div>
-  <!-- card de tabla de pos -->
-	<div class="row mt-4">
+</div>
+<div class="container d-flex align-items-center justify-content-center">
+	<!-- card de tabla de pos -->
+	<div class="row mt-4 ">
 		<div class="overflow-auto px-2">
 			<?php foreach ($campeonatos as $campeonato): ?>
 				<div class="card mb-4 border-0 shadow-lg rounded-4 animate__animated animate__fadeInUp">
