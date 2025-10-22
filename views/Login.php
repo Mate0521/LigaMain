@@ -9,11 +9,13 @@ if (isset($_POST["autenticar"])) {
     } else {
         $admin = new Admin("", "", $correo, $clave);
         $cliente = new Usuario("", "", $correo, $clave);
+		var_dump($cliente);
+		var_dump($admin);
 
         if ($admin->autenticarAdmin()) {
             $_SESSION["id"] = $admin->getIdAdmin();
             $_SESSION["role"] = "A";
-            header('Location: index.php?pid='.base64_encode("Admin"));
+            header('Location: ?pid='.base64_encode("Admin"));
             exit();
         } elseif ($cliente->autenticarUsuario()) {
             $_SESSION["id"] = $cliente->getIdUsuario();
@@ -50,29 +52,27 @@ if (isset($_POST["autenticar"])) {
           <div class="text-center mb-4">
             <img src="img/logo.png" alt="logo" class="img-fluid" style="max-width: 120px;">
             <h3 class="mt-3 text-primary fw-bold">Iniciar Sesión</h3>
-          </div>
+        </div>
 
-          <form method="post" action="index.php" name="autenticar">
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo" required>
-              <label for="correo">Correo</label>
-            </div>
-
-            <div class="form-floating mb-4">
-              <input type="password" class="form-control" id="clave" name="clave" placeholder="Clave" required>
-              <label for="clave">Clave</label>
-            </div>
-
-            <div class="mb-3">
-				<button type="submit" class="btn btn-primary" name="autenticar">Autenticar</button>
-			</div>
-
-            <div class="mb-3">
-				<form action="<?php echo base64_encode("index.php")?>" method="post" name="registrar">
-					<button type="submit" class="btn" name="newCliente"><a class="btn btn-link">¿No tienes cuenta? Regístrate</a></button>
-				</form>
-			</div>
-          </form>
+		<div class="card-body text-center">
+			<form method="post" action="<?php echo base64_encode("index.php")?>" name="autenticar">
+				<div class="mb-3">
+					<input type="email" class="form-control" name="correo"
+						placeholder="Correo" required>
+				</div>
+				<div class="mb-3">
+					<input type="password" class="form-control" name="clave"
+						placeholder="Clave" required>
+				</div>
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary" name="autenticar">Autenticar</button>
+				</div>
+				<div class="mb-3">
+					<form action="<?php echo base64_encode("index.php")?>" method="post" name="registrar">
+						<button type="submit" class="btn" name="newCliente"><a class="btn btn-link">¿No tienes cuenta? Regístrate</a></button>
+					</form>
+				</div>
+			</form>
         </div>
       </div>
     </div>

@@ -46,22 +46,24 @@ $page = isset($_GET['pid']) ? base64_decode($_GET['pid']) : 'Login';
 // Cerrar sesión
 if (isset($_POST["cerrarSecion"])) {
     session_destroy();
-    header("Location: index.php?pid=Login");
+    header("Location: ?pid=". base64_encode("Login"));
     exit();
 }
 
 // Nuevo cliente
 if (isset($_POST["newCliente"])) {
-    header("Location: index.php?pid=Registrarse");
+    header("Location: ?pid=". base64_encode("Registrarse"));
     exit();
 }
 
-if (isset($_SESSION["id"])  && !empty($_SESSION["id"])) {
-    session_destroy();
-    $pidCod = base64_encode("Login");
-    header("Location:?pid=$pidCod");
-    exit();
+$vistasPublicas = ["Login", "Registrarse", "Error"];
+if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
+    // Si no hay sesión y la vista no es pública, redirigir a Error
+    if (!in_array($page, $vistasPublicas)) {
+        $page = "Error";
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

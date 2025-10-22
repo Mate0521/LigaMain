@@ -29,7 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
     // 1) Nombre
     $nombre = trim($_POST['nombre'] ?? '');
     $campeonato->setNombre($nombre);
-    $nombreValido = $campeonato->validarNombre();
+
+    $nombreValido = !empty($nombre) ? $campeonato->validarNombre() : false;
+
     
     // 2) tipo
     $tipoSeleccionado = $_POST['tipo_campeonato'] ?? '';
@@ -161,6 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
                         <div class="alert alert-danger mb-0 mt-2">Seleccione por lo menos 4 equipos o una canctidad que sea potencia de 2 (4, 8, 16) </div>
                     <?php elseif ($equiposValidos == false && $tipoSeleccionado == 3): //mixto?>
                         <div class="alert alert-danger mb-0 mt-2">Seleccione por 32 equipos</div>
+                    <?php else: ?>
+                        <div class="alert alert-danger mb-0 mt-2">Seleccione algun equipo</div>
                     <?php endif; ?>
                 </div>
                 <div class="card-body">
@@ -199,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
                     <?php if ($fechaVal === true): ?>
                         <div class="alert alert-success mb-0 mt-2">Fechas válidas.</div>
                     <?php elseif ($fechaVal === false): ?>
-                        <div class="alert alert-danger mb-0 mt-2">Ingrese las fechas en las que se jugara deben de ser <?php echo $jornadas ?></div>
+                        <div class="alert alert-danger mb-0 mt-2">Ingrese las fechas en las que se jugara deben de ser <?php echo $jornadas<=0?"0 (seleccione un algun aquipo)":$jornadas ?></div>
                     <?php endif; ?>
                 </div>
                 <div class="card-body">

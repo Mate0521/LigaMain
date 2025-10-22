@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
     $equipo = new Equipo("", $nombre,  $idLiga, $img,);
 
     // Validaciones
-    $nombreValido = $equipo->validarNombre();
+    $nombreValido = !empty($nombre) ?  $equipo->validarNombre() : false;
     $ligaValida = $idLiga !== null && $idLiga !== "";
     $imagenValida = filter_var($img, FILTER_VALIDATE_URL) || file_exists($img);
 
