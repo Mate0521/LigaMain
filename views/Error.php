@@ -6,7 +6,7 @@
         <p class="text-muted mb-4">
             No tienes permiso para acceder a esta página o la solicitud es inválida.
         </p>
-        <a href="index.php" class="btn btn-outline-primary">
+        <a href="?pid=<?php echo base64_encode("Login")?>" class="btn btn-outline-primary">
             <i class="bi bi-house-door"></i> Volver al inicio
         </a>
     </div>

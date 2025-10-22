@@ -55,6 +55,13 @@ if (isset($_POST["newCliente"])) {
     header("Location: index.php?pid=Registrarse");
     exit();
 }
+
+if (isset($_SESSION["id"])  && !empty($_SESSION["id"])) {
+    session_destroy();
+    $pidCod = base64_encode("Login");
+    header("Location:?pid=$pidCod");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -6,11 +6,8 @@ $campeonato = new Campeonato("",$_SESSION["id"]);
 $campeonatos = $campeonato->listarCampeonatos();
 
 
-
 ?>
 
-
- <!-- hacemos un row con dos columnas, una de bienvenida y otra con los campeonatos -->
 <div class="container-fluid py-5" style="background: linear-gradient(135deg, #0d6efd 0%, #0b132b 100%); min-height: 100vh;">
     
     <div class="row align-items-center justify-content-center text-light text-center">
@@ -40,6 +37,7 @@ $campeonatos = $campeonato->listarCampeonatos();
                                 </a>
                                 <a href="?pid=<?php echo base64_encode("TablaPos")?>&id_cam=<?php echo base64_encode($campeonato->getIdCampeonato())?>" class="btn btn-primary">
                                     <i class="bi bi-table"></i> Ver Tabla de Posiciones
+
                                 </a>
                             </div>
                         </div>

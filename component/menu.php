@@ -90,14 +90,14 @@ if(isset($_SESSION["role"])){
                         <a class="nav-link" href="?pid=<?php echo base64_encode("EliminarCamp")?>"><i class="bi bi-trash3"></i>Eliminar Campeonato</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href=<?php echo base64_encode("index.php?pid=Home")?> role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="?pid=<?php echo base64_encode("Home")?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i>
                         <?php
                             echo $cliente->getNombre();
                         ?>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <li><a class="dropdown-item" href=<?php echo base64_encode("index.php?pid=PanelDatos")?>>Datos Personales</a></li>
+                            <li><a class="dropdown-item" href="?pid=<?php echo base64_encode("PanelDatos")?>">Datos Personales</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
