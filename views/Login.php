@@ -79,7 +79,7 @@ $campeonatos = $camp->listarCampeonatosAll();
   </div>
   <!-- card de tabla de pos -->
 	<div class="row mt-4">
-		<div class="overflow-auto px-2" style="max-height: 75vh;">
+		<div class="overflow-auto px-2">
 			<?php foreach ($campeonatos as $campeonato): ?>
 				<div class="card mb-4 border-0 shadow-lg rounded-4 animate__animated animate__fadeInUp">
 					<div class="card-header bg-dark text-white fw-bold">
