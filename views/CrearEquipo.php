@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
                         <script>
                             setTimeout(function() {
                                 <?php $pidCod = base64_encode("Home")?>
-                                window.location.href = '?pid=<?php $pidCod ?>';
+                                window.location.href = '?pid=<?php echo $pidCod ?>';
                             }, 2000);
                         </script>
                     <?php endif; ?>
