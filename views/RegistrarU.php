@@ -24,13 +24,14 @@ if(isset($_POST["registrar"])){
 									Error al registrar: " . $var->getMessage() . "
 								</div>";
 							} elseif ($var === true || $var == 1) {
+								$pidCod = base64_encode("Login");
 
 								echo "<div class='alert alert-success' role='alert'>
 									Cliente almacenado correctamente. 
 								</div>
 								<script>
 									setTimeout(function() {
-										window.location.href = 'index.php?pid=Login';
+										window.location.href = 'index.php?pid={$pidCod}';
 									}, 3000);
 								</script>";
 							} else {
@@ -41,7 +42,7 @@ if(isset($_POST["registrar"])){
 						}
 						?>
 	
-						<form method="post" action="index.php?pid=Registrarse" name="registrar">
+						<form method="post" action=<?php echo base64_encode("index.php?pid=Registrarse") ?> name="registrar">
 							<div class="mb-3">
 								<input type="text" class="form-control" name="nombre"
 									placeholder="Nombre" required>

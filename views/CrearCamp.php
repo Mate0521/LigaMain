@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
 
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <form action="index.php?pid=CrearCamp" method="post" name="formCreacion" class="needs-validation p-4" novalidate>
+        <form action="?pid=<?php echo base64_encode("CrearCamp")?>" method="post" name="formCreacion" class="needs-validation p-4" novalidate>
             <div>
                 <h2>Crear Campeonato</h2>
                 <?php if ($mensajeGeneral): ?>
@@ -97,7 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
                     <?php if ($mensajeGeneral === 'Campeonato creado correctamente.'): ?>
                         <script>
                             setTimeout(function() {
-                                window.location.href = 'index.php?pid=Home';
+                                <?php $pidCod = base64_encode("Home"); ?>
+                                window.location.href = '?pid=<?php echo $pidCod ?>';
                             }, 3000);
                         </script>
                     <?php endif; ?>

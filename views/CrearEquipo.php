@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
 
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <form action="index.php?pid=CrearEquipo" method="post" class="p-4 needs-validation" novalidate>
+        <form action="?pid=<?php echo base64_encode("CrearEquipo") ?>" method="post" class="p-4 needs-validation" novalidate>
             <div>
                 <h2>Crear Equipo</h2>
                 <?php if ($mensajeGeneral): ?>
@@ -48,8 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
                     <?php if ($mensajeGeneral === 'Equipo creado correctamente.'): ?>
                         <script>
                             setTimeout(function() {
-                                window.location.href = 'index.php?pid=Home';
-                            }, 2500);
+                                <?php $pidCod = base64_encode("Home")?>
+                                window.location.href = '?pid=<?php $pidCod ?>';
+                            }, 2000);
                         </script>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -117,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
                         type="text"
                         id="imagen"
                         name="imagen"
-                        placeholder="Ejemplo: img/escudos/mi_equipo.png o https://..."
+                        placeholder="Ejemplo:  https://..."
                         class="form-control <?php if ($imagenValida === true) echo 'is-valid'; elseif ($imagenValida === false) echo 'is-invalid'; ?>"
                         value="<?php echo htmlspecialchars($_POST['imagen'] ?? ''); ?>"
                         required

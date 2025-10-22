@@ -3,12 +3,14 @@ $campeonato = new Campeonato("", $_SESSION["id"]);
 
 // Si se presiona el botón de eliminar
 if (isset($_GET['eliminar'])) {
-    $id_campeonato = $_GET['eliminar'];
+    $id_campeonato = base64_decode($_GET['eliminar']);
     $campeonatoEliminar = new Campeonato($id_campeonato, $_SESSION["id"]);
     $campeonatoEliminar->eliminarCampeonato();
 
+    $pidCod = base64_encode("EliminarCamp");
+
     echo "<script>alert('Campeonato eliminado correctamente');</script>";
-    echo "<script>window.location.href='index.php?pid=EliminarCamp';</script>";
+    echo "<script>window.location.href='index.php?pid={$pidCod}';</script>";
     exit;
 }
 
@@ -40,7 +42,7 @@ $campeonatos = $campeonato->listarCampeonatos();
                                     <td><?php echo htmlspecialchars($cam->getNombre()); ?></td>
                                     <td><?php echo htmlspecialchars($cam->getIdTipo()->getNombre()); ?></td>
                                     <td>
-                                        <a href="index.php?pid=EliminarCamp&eliminar=<?php echo $cam->getIdCampeonato(); ?>"
+                                        <a href="?pid=<?php echo base64_encode("EliminarCamp")?>&eliminar=<?php echo base64_encode($cam->getIdCampeonato())?>"
                                            class="btn btn-outline-danger btn-sm"
                                            onclick="return confirm('¿Estás seguro de eliminar este campeonato? Esta acción no se puede deshacer.');">
                                            <i class="bi bi-trash"></i> Eliminar

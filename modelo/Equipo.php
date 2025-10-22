@@ -114,7 +114,12 @@ class Equipo
         $conexion -> ejecutar($sql);
         $fila = $conexion -> registro();
         $conexion->cerrar();
-        return !$fila[0];
+
+        if (isset($fila[0]) && !empty($fila[0])) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 }

@@ -35,25 +35,22 @@ if(isset($_SESSION["role"])){
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.php?pid=CrearEquipo">Crear Equipos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?pid=EliminarUser"><i class="bi bi-trash3"></i>Eliminar Usuario</a>
+                        <a class="nav-link" href="<?php echo base64_encode("index.php?pid=EliminarUser") ?>"><i class="bi bi-trash3"></i>Eliminar Usuario</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="<?php echo base64_encode("index.php?pid=Home")?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i>
                         <?php
                             echo $admin->getNombre();
                         ?>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <li><a class="dropdown-item" href="index.php?pid=PanelDatos">Datos Personales</a></li>
+                            <li><a class="dropdown-item" href=<?php echo base64_encode("index.php?pid=PanelDatos")?>>Datos Personales</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form action="index.php" method="post">
+                                <form action=<?php echo base64_encode("index.php")?> method="post">
                                     <button type="submit" class="btn btn-danger" name="cerrarSecion">Cerrar secion</button>
                                 </form>
                             </li>
@@ -81,28 +78,31 @@ if(isset($_SESSION["role"])){
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php?pid=Home">Mis Campeonatos</a>
+                        <a class="nav-link" aria-current="page" href="?pid=<?php echo base64_encode('Home'); ?>"><i class="bi bi-box-arrow-in-down-left"></i> Mis Campeonatos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?pid=CrearCamp"><i class="bi bi-database-add"></i>Crear Campeonato</a>
+                        <a class="nav-link" href="?pid=<?php echo base64_encode("CrearCamp")?>"><i class="bi bi-database-add"></i>Crear Campeonato</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?pid=EliminarCamp"><i class="bi bi-trash3"></i>Eliminar Campeonato</a>
+                        <a class="nav-link" aria-current="page" href="?pid=<?php echo base64_encode("CrearEquipo")?>">Crear Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?pid=<?php echo base64_encode("EliminarCamp")?>"><i class="bi bi-trash3"></i>Eliminar Campeonato</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href=<?php echo base64_encode("index.php?pid=Home")?> role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i>
                         <?php
                             echo $cliente->getNombre();
                         ?>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <li><a class="dropdown-item" href="index.php?pid=PanelDatos">Datos Personales</a></li>
+                            <li><a class="dropdown-item" href=<?php echo base64_encode("index.php?pid=PanelDatos")?>>Datos Personales</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form action="index.php" method="post">
+                                <form action=<?php echo base64_encode("index.php") ?> method="post">
                                     <button type="submit" class="btn btn-danger" name="cerrarSecion">Cerrar secion</button>
                                 </form>
                             </li>

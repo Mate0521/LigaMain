@@ -1,7 +1,7 @@
 <?php
 
 $campeonatoDAO = new CampeonatoDAO();
-$tablaPosiciones = $campeonatoDAO->obtenerTablaPosiciones($_GET["id_cam"]);
+$tablaPosiciones = $campeonatoDAO->obtenerTablaPosiciones(base64_decode($_GET["id_cam"]));
 
 ?>
 <div>

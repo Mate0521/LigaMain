@@ -32,7 +32,7 @@ $pages = [
     "CrearCamp" => "views/CrearCamp.php",
     "EliminarCamp" => "views/EliminarCamp.php",
     "PanelDatos" => "views/Datos.php",
-    "PanelCam" => "views/PanelPartdos.php",
+    "PanelCam" => "views/PanelPartdos.php", 
     "TablaPos"=>"views/TablaPos.php",
     "EdicionPartido" => "views/edicionPartido.php",
     "CrearEquipo" => "views/CrearEquipo.php",
@@ -40,7 +40,8 @@ $pages = [
 ];
 
 // Página por defecto
-$page = $_GET["pid"] ?? "Login";
+$page = isset($_GET['pid']) ? base64_decode($_GET['pid']) : 'Login';
+
 
 // Cerrar sesión
 if (isset($_POST["cerrarSecion"])) {

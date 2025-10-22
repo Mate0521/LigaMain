@@ -4,12 +4,14 @@ $usuario = new Usuario();
 
 // Si se presiona el botón de eliminar
 if (isset($_GET['eliminar'])) {
-    $id_usuario = $_GET['eliminar'];
+    $id_usuario = base64_decode($_GET['eliminar']);
     $usuarioEliminar = new Usuario($id_usuario);
     $usuarioEliminar->eliminarUsuario();
 
+    $pidCod = base64_encode("EliminarUsuario");
+
     echo "<script>alert('Usuario eliminado correctamente');</script>";
-    echo "<script>window.location.href='index.php?pid=EliminarUsuario';</script>";
+    echo "<script>window.location.href='index.php?pid={$pidCod}';</script>";
     exit;
 }
 
@@ -42,7 +44,7 @@ $usuarios = $usuario->listarUsuarios();
                                     <td><?php echo htmlspecialchars($us->getNombre()); ?></td>
                                     <td><?php echo htmlspecialchars($us->getCorreo()); ?></td>
                                     <td>
-                                        <a href="index.php?pid=EliminarUser&eliminar=<?php echo $us->getIdUsuario(); ?>"
+                                        <a href=<?php echo base64_encode("index.php?pid=EliminarUser&eliminar=". $us->getIdUsuario()) ?>
                                            class="btn btn-outline-danger btn-sm"
                                            onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
                                            <i class="bi bi-trash"></i> Eliminar

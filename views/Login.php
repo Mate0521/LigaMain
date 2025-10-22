@@ -9,13 +9,13 @@ if(isset($_POST["autenticar"])){
 	{
         $_SESSION["id"] = $admin -> getIdAdmin();
 		$_SESSION["role"] = "A";
-        header('Location: index.php?pid=Admin');
+        header('Location: index.php?pid='.base64_encode("Admin"));
 		exit();
     }elseif($cliente -> autenticarUsuario())
 	{
 		$_SESSION["id"] = $cliente -> getIdUsuario();
 		$_SESSION["role"] = "U";
-		header('Location: index.php?pid=Home');
+		header("Location: ?pid=" . base64_encode("Home"));
 		exit();
 	}else
 	{
@@ -48,7 +48,7 @@ if(isset($_POST["autenticar"])){
 					<img src="img/logo.png" alt="logo" class="img-fluid img-top">
 				</div>
 				<div class="card-body text-center">
-					<form method="post" action="index.php" name="autenticar">
+					<form method="post" action="<?php echo base64_encode("index.php")?>" name="autenticar">
 						<div class="mb-3">
 							<input type="email" class="form-control" name="correo"
 								placeholder="Correo" required>
@@ -61,8 +61,7 @@ if(isset($_POST["autenticar"])){
 							<button type="submit" class="btn btn-primary" name="autenticar">Autenticar</button>
 						</div>
 						<div class="mb-3">
-							<form action="index.php" method="post" name="registrar">
-
+							<form action="<?php echo base64_encode("index.php")?>" method="post" name="registrar">
 								<button type="submit" class="btn" name="newCliente"><a class="btn btn-link">¿No tienes cuenta? Regístrate</a></button>
 							</form>
 						</div>
