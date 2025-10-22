@@ -32,7 +32,7 @@ $campeonatos = $camp->listarCampeonatosAll();
 
 ?>
 <div class="container vh-100 d-flex align-items-center justify-content-center">
-  <div class="row w-100">
+  <div class="row mt-4">
     <!-- Sección izquierda -->
     <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center bg-dark text-light rounded-start-4 shadow-lg">
       <h1 class="fw-bold mb-3">Bienvenido a <span class="text-warning">LigaMain</span></h1>
