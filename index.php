@@ -1,6 +1,6 @@
-<?php
-session_name("LIGAMAIN_SESSION");
-session_start();
+    <?php
+    session_name("LIGAMAIN_SESSION");
+    session_start();
 
 
 include_once 'modelo/Usuario.php';
@@ -79,34 +79,34 @@ if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
 <body class="bg-dark text-light">
 
 
-    <div>
-        <?php
-        if ($page != "Login" && $page != "Registrarse") {
-            include('component/menu.php');
-        }
-        ?>
-    </div>
-
-
-    <div class="container mt-4 text-center">
-
-        <?php
-
-            if (array_key_exists($page, $pages)) {
-                include($pages[$page]);
-            } else {
-                include($pages["Error"]);
+        <div>
+            <?php
+            if ($page != "Login" && $page != "Registrarse") {
+                include('component/menu.php');
             }
-        ?>
-    </div>
+            ?>
+        </div>
 
-    <div>
-        <?php
-        if ($page != "Login" && $page != "Registrarse") {
-            include('component/footer.php');
-        }
-        ?>
-    </div>
 
-</body>
-</html>
+        <div class="container mt-4 text-center">
+
+            <?php
+
+                if (array_key_exists($page, $pages)) {
+                    include($pages[$page]);
+                } else {
+                    include($pages["Error"]);
+                }
+            ?>
+        </div>
+
+        <div>
+            <?php
+            if ($page != "Login" && $page != "Registrarse") {
+                include('component/footer.php');
+            }
+            ?>
+        </div>
+
+    </body>
+    </html>
