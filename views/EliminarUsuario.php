@@ -5,6 +5,7 @@ $usuario = new Usuario();
 // Si se presiona el botón de eliminar
 if (isset($_GET['eliminar'])) {
     $id_usuario = base64_decode($_GET['eliminar']);
+    $id_usuario = limpiarEntrada($id_usuario);
     $usuarioEliminar = new Usuario($id_usuario);
     $usuarioEliminar->eliminarUsuario();
 

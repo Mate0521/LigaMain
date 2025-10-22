@@ -26,15 +26,16 @@ $tipos=$tipo->obtenerTipos();
 // Procesar envío único
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearCampeonato'])) {
 
-    // 1) Nombre
-    $nombre = trim($_POST['nombre'] ?? '');
-    $campeonato->setNombre($nombre);
+    $nombre = limpiarEntrada($_POST['nombre'] ?? '');
+    $tipoSeleccionado = limpiarEntrada($_POST['tipo_campeonato'] ?? '');
+    $equiposSeleccionados = array_map('limpiarEntrada', $_POST['equipos'] ?? []);
+    $fechas = array_map('limpiarEntrada', $_POST['fechas'] ?? []);
 
+
+    $campeonato->setNombre($nombre);
     $nombreValido = !empty($nombre) ? $campeonato->validarNombre() : false;
 
     
-    // 2) tipo
-    $tipoSeleccionado = $_POST['tipo_campeonato'] ?? '';
     $campeonato->setIdTipo($tipoSeleccionado);
     $valTipo = $campeonato->getIdTipo()!= null? true : false;
 

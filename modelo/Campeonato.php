@@ -201,6 +201,37 @@ class Campeonato
         $conexion -> cerrar();
         return $campeonatos;
     }
+    public function listarCampeonatosAll(){
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO();
+        $sql = $campeonatoDAO->listarCampeonatosAll();
+        $conexion -> abrir();
+        $campeonatos = [];
+        $conexion -> ejecutar($sql);
+
+        while($fila = $conexion -> registro()){
+
+            $this->id_campeonato=$fila[0];
+            
+            $usuario=new Usuario($fila[1]);
+            $usuario->obtenerUsuario();
+            $this->id_usuario=$usuario;
+
+            $this->nombre=$fila[2];
+
+            $tipo=new Tipo($fila[3]);
+            $tipo->obtenerTipo();
+            $this->id_tipo=$tipo;
+
+
+
+            $campeonatos[] = new Campeonato($this->id_campeonato, $this->id_usuario, $this->nombre, $this->id_tipo);
+        }
+
+        $conexion -> cerrar();
+        return $campeonatos;
+    }
+
     public function listarEquipos(){
         $conexion = new Conexion();
         $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);

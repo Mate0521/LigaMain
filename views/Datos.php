@@ -1,9 +1,5 @@
 <?php
 
-include_once 'modelo/Usuario.php';
-include_once 'modelo/Admin.php';
-include_once 'config/conexion.php'; 
-
 if (isset($_SESSION["role"])) {
     if ($_SESSION["role"] == "U") {
         $persona = new Usuario($_SESSION["id"]);
@@ -11,13 +7,7 @@ if (isset($_SESSION["role"])) {
     } elseif ($_SESSION["role"] == "A") {
         $persona = new Admin($_SESSION["id"]);
         $persona->obtenerAdmin();
-    } else {
-        header("Location: index.php");
-        exit();
     }
-} else {
-    header("Location: index.php");
-    exit();
 }
 ?>
 <div class="container mt-5">
@@ -39,13 +29,10 @@ if (isset($_SESSION["role"])) {
                         <li class="list-group-item">
                             <strong>Correo:</strong> <?= htmlspecialchars($persona->getCorreo()) ?>
                         </li>
-                        <?php if ($_SESSION["role"] == "U"): ?>
-                          
-                        <?php endif; ?>
                     </ul>
 
                     <div class="text-center">
-                        <a href="index.php?pid=Home" class="btn btn-secondary me-2">
+                        <a href="?pid=<?php echo base64_encode("Home")?>" class="btn btn-secondary me-2">
                             <i class="bi bi-arrow-left"></i> Volver
                         </a>
                     

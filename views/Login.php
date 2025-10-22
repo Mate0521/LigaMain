@@ -27,11 +27,11 @@ if (isset($_POST["autenticar"])) {
         }
     }
 }
+$camp=new Campeonato();
+$campeonatos = $camp->listarCampeonatosAll();
 
-    
-
-
-?><div class="container vh-100 d-flex align-items-center justify-content-center">
+?>
+<div class="container vh-100 d-flex align-items-center justify-content-center">
   <div class="row w-100">
     <!-- Sección izquierda -->
     <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center bg-dark text-light rounded-start-4 shadow-lg">
@@ -77,4 +77,30 @@ if (isset($_POST["autenticar"])) {
       </div>
     </div>
   </div>
+  <!-- card de tabla de pos -->
+	<div class="row mt-4">
+		<div class="overflow-auto px-2" style="max-height: 75vh;">
+			<?php foreach ($campeonatos as $campeonato): ?>
+				<div class="card mb-4 border-0 shadow-lg rounded-4 animate__animated animate__fadeInUp">
+					<div class="card-header bg-dark text-white fw-bold">
+						<?php echo htmlspecialchars($campeonato->getNombre()); ?>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title text-primary fw-semibold mb-3">
+							<?php echo htmlspecialchars($campeonato->getIdTipo()->getNombre()); ?>
+						</h5>
+						<h5 class="card-title text-primary fw-semibold mb-3">
+							<?php echo htmlspecialchars($campeonato->getIdUsuario()->getNombre()); ?>
+						</h5>
+						<div class="text-center mt-3">
+							<a href="?pid=<?php echo base64_encode("TablaPos")?>&id_cam=<?php echo base64_encode($campeonato->getIdCampeonato())?>" class="btn btn-primary">
+								<i class="bi bi-table"></i> Ver Tabla de Posiciones
+							</a>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
 </div>
+

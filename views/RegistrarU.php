@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST["registrar"])){
-    $nombre = $_POST["nombre"];
-    $correo = $_POST["correo"];
+    $nombre = limpiarEntrada($_POST["nombre"]);
+    $correo = limpiarEntrada($_POST["correo"]);
     $clave = $_POST["clave"];
     $usuario = new Usuario("", $nombre, $correo, $clave);
 	$var=$usuario -> crearUsuario();

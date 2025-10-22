@@ -51,6 +51,10 @@ class CampeonatoDAO
                 FROM `g1_campeonato` 
                 WHERE `id_usuario` = '". $this->id_usuario ."';";
     }
+    public function listarCampeonatosAll(){
+        return "SELECT `id_campeonato`, `id_usuario`, `nombre`, `id_tipo` 
+                FROM `g1_campeonato` ;";
+    }
     public function listarEquipos(){
         return "SELECT  `id_equipo`, `puntuacion` 
                 FROM `g1_campeonato_equipos` 

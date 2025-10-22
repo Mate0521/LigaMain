@@ -4,8 +4,8 @@ $partido = new Partido(base64_decode($_GET["idPartido"]));
 $partido->consultar(); // obtiene toda la info del partido
 
 if (isset($_POST["actualizar"])) {
-    $golesLocal = $_POST["golesLocal"];
-    $golesVisit = $_POST["golesVisitante"];
+    $golesLocal = limpiarEntrada($_POST["golesLocal"] ?? 0);
+    $golesVisit = limpiarEntrada($_POST["golesVisitante"] ?? 0);
 
      //primer condicional que valida que sean numeros enteros y no negativos ni decimales, es cmo un stp--streamcompareiton
     if (!is_numeric($golesLocal) || !is_numeric($golesVisit) || $golesLocal < 0 || $golesVisit < 0) {

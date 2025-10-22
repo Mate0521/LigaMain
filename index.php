@@ -22,6 +22,7 @@ include_once 'modelo/Partido.php';
 include_once 'dao/PartidoDAO.php';
 include_once 'modelo/Liga.php';
 include_once 'dao/LigaDAO.php';
+include_once 'config/Seguridad.php';
 
 $pages = [
     "Home" => "views/home.php",
@@ -56,7 +57,7 @@ if (isset($_POST["newCliente"])) {
     exit();
 }
 
-$vistasPublicas = ["Login", "Registrarse", "Error"];
+$vistasPublicas = ["Login", "Registrarse", "Error", "TablaPos"];
 if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
     // Si no hay sesión y la vista no es pública, redirigir a Error
     if (!in_array($page, $vistasPublicas)) {

@@ -1,6 +1,6 @@
 <?php
 if($_SESSION["role"]!="U"){
-    header(base64_encode('Location: index.php?pid=Error'));
+    header("Location:?pid=".base64_encode('Error'));
 }
 $campeonato = new Campeonato("",$_SESSION["id"]);
 $campeonatos = $campeonato->listarCampeonatos();

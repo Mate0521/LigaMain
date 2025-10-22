@@ -4,6 +4,7 @@ $campeonato = new Campeonato("", $_SESSION["id"]);
 // Si se presiona el botón de eliminar
 if (isset($_GET['eliminar'])) {
     $id_campeonato = base64_decode($_GET['eliminar']);
+    $id_campeonato = limpiarEntrada($id_campeonato ?? 0);
     $campeonatoEliminar = new Campeonato($id_campeonato, $_SESSION["id"]);
     $campeonatoEliminar->eliminarCampeonato();
 

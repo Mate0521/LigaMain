@@ -26,4 +26,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Redirigir todo a index.php
 RewriteRule ^([^/]+)/?$ index.php?page=$1 [L,QSA]
 
+# Forzar index.php como página por defecto
+DirectoryIndex index.php index.html
+
 

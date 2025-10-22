@@ -11,9 +11,9 @@ $ligas = $liga->listarLigas();
 
 // --- Crear equipo ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crearEquipo'])) {
-    $nombre = trim($_POST['nombre'] ?? '');
-    $idLiga = $_POST['liga'] ?? null;
-    $img = trim($_POST['imagen'] ?? '');
+    $nombre = limpiarEntrada($_POST['nombre'] ?? '');
+    $idLiga = limpiarEntrada($_POST['liga'] ?? '');
+    $img = limpiarEntrada($_POST['imagen'] ?? '');
 
     $equipo = new Equipo("", $nombre,  $idLiga, $img,);
 
