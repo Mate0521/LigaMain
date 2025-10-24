@@ -18,21 +18,30 @@ class AdminDAO
     }
 
     //metodos 
-    public function crearAdmin()
-    {
-        //codigo para crear un admin en la base de datos
-    }
     public function autenticarAdmin()
     {
-        return "SELECT `id_admin` 
-                FROM `g1_admin` 
-                WHERE correo = '$this->correo' and clave = '".md5($this->clave)."';";
+        return [
+            "sql" => "SELECT `id_admin` 
+                      FROM `g1_admin` 
+                      WHERE correo = :correo and clave = :clave ;",
+            "parametros" => [
+                ":correo" => $this->correo,
+                ":clave" => md5($this->clave)
+            ]
+
+            ];
     }
     public function obtenerAdmin()
     {
-        return "SELECT `nombre`, `correo` 
-                FROM `g1_admin` 
-                WHERE `id_admin` = ". $this->id_admin .";";
+        return [
+            "sql" => "SELECT `nombre`, `correo` 
+                      FROM `g1_admin` 
+                      WHERE `id_admin` = :id_admin ;",
+            "parametros" => [
+                ":id_admin" => $this->id_admin
+            ]
+            ];
+
     }
 
 }   

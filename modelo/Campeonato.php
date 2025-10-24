@@ -64,7 +64,8 @@ class Campeonato
         $conexion -> abrir();
         $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this -> nombre, $this->id_tipo);        
         try{
-            $conexion -> ejecutar($campeonatoDAO ->crearCampeonato());
+            $sql=$campeonatoDAO ->crearCampeonato();
+            $conexion -> ejecutar($sql['sql'], $sql['parametros']);
             $conexion -> cerrar();
             $this->obtenerCampeonato();
             return true;
@@ -90,7 +91,7 @@ class Campeonato
         $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
         $sql = $campeonatoDAO->obtenerCampeonato();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'],$sql['parametros']);
         if($fila = $conexion->registro()){
 
             $usuario=new Usuario($fila[0]);
@@ -112,7 +113,7 @@ class Campeonato
         $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario);
         $sql = $campeonatoDAO->obtenerCampeonatoUsuario();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'],$sql['parametros']);
         while($fila = $conexion -> registro()){
             $campeonatos[]= $fila[0];
         }
@@ -247,6 +248,29 @@ class Campeonato
         $conexion -> cerrar();
         return $equiopos;
 
+    }
+
+    public function obtenerTablaPosiciones(){
+        $conexion = new Conexion();
+        $campeonatoDAO = new CampeonatoDAO($this->id_campeonato);
+        $conexion->abrir();
+        $sql = $campeonatoDAO->obtenerTablaPosiciones();
+
+        $conexion->ejecutar($sql);
+
+        $tabla = [];
+        while ($fila = $conexion->registro()) {
+            $tabla[] = [
+                'nombre' => $fila[0],
+                'puntos' => $fila[1],
+                'goles_favor' => $fila[2],
+                'goles_contra' => $fila[3],
+                'diferencia_gol' => $fila[4]
+            ];
+        }
+
+        $conexion->cerrar();
+        return $tabla;
     }
 
 

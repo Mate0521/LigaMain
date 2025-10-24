@@ -60,7 +60,7 @@ class Admin
         $adminDAO = new AdminDAO("", "", $this->correo, $this->clave);
         $sql =$adminDAO->autenticarAdmin();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar();
         if($fila = $conexion->registro()){
             $this->id_admin = $fila[0];
             $conexion->cerrar();
