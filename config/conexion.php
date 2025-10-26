@@ -21,7 +21,7 @@ class Conexion
                 PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES => false
             ];
-            $this->conexion = new PDO("mysql:host=". $this->hosname .";dbname=". $this->databadase .";charset=". $this->charset, 
+            $this->conexion = new PDO("mysql:host={$this->hosname};dbname={$this->databadase};charset={$this->charset}", 
                                     $this->username, 
                                     $this->password,
                                     $option);
