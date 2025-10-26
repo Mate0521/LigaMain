@@ -14,7 +14,7 @@ class Conexion
     private $databadase = "itiud_aplint";
     private $username = "itiud_aplint";
     private $password = "GYesgQ118&";
-
+    
     function abrir(){
         try{
             $option = [

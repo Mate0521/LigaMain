@@ -1,11 +1,11 @@
-    <?php
-    session_name("LIGAMAIN_SESSION");
-    session_start();
+<?php
+session_name("LIGAMAIN_SESSION");
+session_start();
 
 
 include_once 'modelo/Usuario.php';
 include_once 'modelo/admin.php';
-include_once 'config/Conexion.php';
+include_once 'config/conexion.php';
 include_once 'dao/UsuarioDAO.php';
 include_once 'dao/adminDAO.php';
 include_once 'modelo/Campeonato.php';
