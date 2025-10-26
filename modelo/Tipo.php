@@ -37,7 +37,7 @@ class Tipo
         $sql = $tipoDAO->obtenerTipos();
         $conexion -> abrir();
         $tipos = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
 
         while($fila = $conexion -> registro()){
             $tipos[] = new Tipo($fila[0], $fila[1]);
@@ -53,7 +53,7 @@ class Tipo
         $tipoDAO = new TipoDAO($this->id_tipo);
         $sql = $tipoDAO->obtenerTipo();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
         if($fila=$conexion->registro()){
             $this->nombre= $fila[0];
         }

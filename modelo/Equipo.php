@@ -62,7 +62,8 @@ class Equipo
         $conexion -> abrir();
         $equipopDAO = new EquipoDAO("", $this -> nombre, $this->id_liga, $this->img);
         try{
-            $conexion -> ejecutar($equipopDAO ->crearEquipo());
+            $sql=$equipopDAO ->crearEquipo();
+            $conexion -> ejecutar($sql['sql'], $sql['parametros']);
             $conexion -> cerrar();
             return true;
         }catch(Exception $e){
@@ -76,7 +77,7 @@ class Equipo
         $equipoDAO = new EquipoDAO($this->id_equipo);
         $sql = $equipoDAO->obtenerEquipo();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'],$sql['parametros']);
         if($fila = $conexion -> registro()){
             $this->nombre=$fila[0];
 
@@ -96,7 +97,7 @@ class Equipo
         $sql = $equipoDAO->listarEquipos();
         $conexion -> abrir();
         $equipos = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'],$sql['parametros']);
 
         while($fila = $conexion -> registro()){
             $equipos[] = new Equipo($fila[0], $fila[1], $fila[2], $fila[3]);
@@ -111,7 +112,7 @@ class Equipo
         $equipoDAO = new EquipoDAO("", $this->nombre, $this->id_liga);
         $sql = $equipoDAO->validarNombre();
         $conexion->abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
         $fila = $conexion -> registro();
         $conexion->cerrar();
 

@@ -20,27 +20,44 @@ class EquipoDAO
     //metodos para el crud del equipo
     public function crearEquipo()
     {
-        return "INSERT INTO `g1_equipo`(`nombre`, `id_liga`, `img`) 
-                VALUES ('". $this->nombre ."','". $this->id_liga ."','". $this->img ."');";
+        return [
+            "sql"=>"INSERT INTO `g1_equipo`(`nombre`, `id_liga`, `img`) 
+                VALUES (':nombrre',':id_liga',':img');",
+            "parametros"=>[
+                ":nombrre"=>$this->nombre,
+                ":id_liga"=>$this->id_liga,
+                ":img"=>$this->img
+            ]
+            ];
     }
     public function obtenerEquipo()
     {
-        return "SELECT `nombre`, `id_liga`, `img` 
+        return [
+            "sql"=>"SELECT `nombre`, `id_liga`, `img` 
                 FROM `g1_equipo` 
-                WHERE `id_equipo` = ". $this->id_equipo .";";
+                WHERE `id_equipo` = :id_equipo ;",
+            "parametros"=>[
+                ":id_equipo"=>$this->id_equipo
+            ]
+            ];
     }
     public function listarEquipos()
     {
-        return "SELECT `id_equipo`, `nombre`, `id_liga`, `img` 
-                FROM `g1_equipo`";
+        return [
+            "sql"=> "SELECT `id_equipo`, `nombre`, `id_liga`, `img` 
+                FROM `g1_equipo`",
+            "parametros"=>[]
+        ];
     }
     public function validarNombre(){
-        return "SELECT `id_equipo`
+        return [
+            "sql"=>"SELECT `id_equipo`
                 FROM `g1_equipo` 
-                WHERE `nombre`= '". $this->nombre ."';";
-    }
-    public function eliminarUsuario(){
-        
+                WHERE `nombre`= ':nombre' ;",
+            "parametros"=>[
+                ":nombre"=>$this->nombre
+            ]
+            ];
     }
     
 }

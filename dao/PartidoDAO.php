@@ -26,60 +26,82 @@ class PartidoDAO
     // Crear partido
     public function crearPartido()
     {
-        return "INSERT INTO g1_partido (id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit)
-                VALUES ('{$this->id_eq_local}', '{$this->id_eq_visit}', '{$this->id_fase}', '{$this->id_fecha}', 0, 0)";
+        return [
+            "sql"=>"INSERT INTO g1_partido (id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit)
+                VALUES (':id_eq_local', ':id_eq_visit', ':id_fase', ':fecha', 0, 0)",
+            "parametros"=>[
+                ":id_eq_local"=>$this->id_eq_local,
+                ":id_eq_visit"=>$this->id_eq_visit,
+                ":id_fase"=>$this->id_fase,
+                ":fecha"=>$this->id_fecha
+            ]
+            ];
     }
 
     // Listar partidos por fechas
     public function listarPartidos($id_fechas)
     {
-        return "SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
+        return [
+            "sql"=>"SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
                 FROM g1_partido
-                WHERE id_fecha IN ($id_fechas)";
+                WHERE id_fecha IN (:id_fechas)",
+            "parametros"=>[
+                ":id_fechas"=>$id_fechas
+            ]
+            ];
     }
 
     // Consultar partido individual
     public function consultar()
     {
-        return "SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
+        return [
+            "sql"=>"SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
                 FROM g1_partido 
-                WHERE id_partido = " . $this->id_partido.";";
+                WHERE id_partido = :id_partido ;",
+            "parametros"=>[
+                ":id_partido"=>$this->id_partido
+            ]
+            ];
     }
 
         // Actualizar resultado
-    public function actualizarResultado()
-    {
-        $conexion = new Conexion();
-        $conexion->abrir();
-
-        $sql = "UPDATE g1_partido 
-                SET goles_local = ". $this->goles_local.", goles_visit = ". $this->goles_visit ." 
-                WHERE id_partido = ". $this->id_partido;
-
-        $conexion->ejecutar($sql);
-        $conexion->cerrar();
+    public function actualizarResultado() {
+        return [
+            "sql" => "UPDATE g1_partido 
+                      SET goles_local = :goles_local, goles_visit = :goles_visit 
+                      WHERE id_partido = :id_partido;",
+            "parametros" => [
+                ":goles_local" => $this->goles_local,
+                ":goles_visit" => $this->goles_visit,
+                ":id_partido" => $this->id_partido
+            ]
+        ];
     }
 
-
-    public function actualizarPuntos($idEquipo, $puntos, $golesFavor, $golesContra)
-    {
-        $conexion = new Conexion();
-        $conexion->abrir();
-
-        // Suma los puntos y los goles en la tabla campeonato_equipos
-        $sql = "UPDATE g1_campeonato_equipos 
-                SET puntuacion = puntuacion + $puntos,
-                    goles_favor = goles_favor + $golesFavor,
-                    goles_contra = goles_contra + $golesContra
-                WHERE id_equipo = $idEquipo";
-
-        $conexion->ejecutar($sql);
-        $conexion->cerrar();
+    public function actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra) {
+        return [
+            "sql" => "UPDATE g1_campeonato_equipos
+                      SET puntuacion = puntuacion + :puntos,
+                          goles_favor = goles_favor + :goles_favor,
+                          goles_contra = goles_contra + :goles_contra
+                      WHERE id_equipo = :id_equipo;",
+            "parametros" => [
+                ":puntos" => $puntos,
+                ":goles_favor" => $goles_favor,
+                ":goles_contra" => $goles_contra,
+                ":id_equipo" => $id_equipo
+            ]
+        ];
     }
 
     public function eliminarPartidos($fechas){
-        return "DELETE FROM `g1_partido` 
-                WHERE `id_fecha` IN (". $fechas .");";
+        return [
+            "sql"=>"DELETE FROM `g1_partido` 
+                WHERE `id_fecha` IN (". $fechas .");",
+            "parametros"=>[
+                ":fechas"=>$fechas
+            ]
+            ];
     }
 
 

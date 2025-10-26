@@ -19,12 +19,20 @@ class LigaDAO
     }
     public function obtenerLiga()
     {
-        return "SELECT `nombre` 
+        return [
+            "sql"=>"SELECT `nombre` 
                 FROM `g1_liga` 
-                WHERE `id_liga` = ". $this->id_liga .";";
+                WHERE `id_liga` = :id_liga ;",
+            "parametros"=>[
+                ":id_liga"=>$this->id_liga
+            ]
+            ];
     }
     public function listarLigas(){
-        return "SELECT `id_liga`, `nombre` 
-                FROM `g1_liga` ";
+        return [
+            "sql"=>"SELECT `id_liga`, `nombre` 
+                FROM `g1_liga` ",
+            "parametros"=>[]
+        ];
     }
 }

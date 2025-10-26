@@ -79,7 +79,7 @@ class Campeonato
         $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this->nombre);
         $sql = $campeonatoDAO->valNombre();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'],$sql['parametros']);
         if($fila = $conexion->registro()){
             $this->id_campeonato = $fila[0];
             $conexion->cerrar();
@@ -128,13 +128,13 @@ class Campeonato
         $sql=$campeonatoDAO->eliminarRelacionEquipos();
         $conexion->abrir();
         try{
-            $conexion->ejecutar($sql);
+            $conexion->ejecutar($sql['sql'],$sql['parametros']);
             //ahora eliminar la relacion con las fechas 
             $fecha=new Fecha("",$this->id_campeonato);
             $fecha->eliminarFechas();
             //ya sin relacion alguna elminamos el campeonato
             $sql = $campeonatoDAO->eliminarCampeonato();
-            $conexion->ejecutar($sql);
+            $conexion->ejecutar($sql['sql'], $sql['parametros']);
         }catch(Exception $e){
             return $e;
         }
@@ -148,7 +148,7 @@ class Campeonato
         $campeonatoDAO = new CampeonatoDAO("", $this->id_usuario, $this->nombre);
         $sql = $campeonatoDAO->valNombre();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'],$sql['parametros']);
         if($fila = $conexion->registro()){
             $this->id_campeonato = $fila[0];
             $conexion->cerrar();
@@ -163,7 +163,7 @@ class Campeonato
         $campeonatoDAO = new CampeonatoDAO($this->id_campeonato, "", "");        
         try{
             $sql=$campeonatoDAO ->relaionarEquipos($idEquipo);
-            $conexion -> ejecutar($sql);
+            $conexion -> ejecutar($sql['slq'], $sql['parametros']);
             $conexion -> cerrar();
             return true;
         }catch(Exception $e){
@@ -178,7 +178,7 @@ class Campeonato
         $sql = $campeonatoDAO->listarCampeonatos();
         $conexion -> abrir();
         $campeonatos = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
 
         while($fila = $conexion -> registro()){
 
@@ -208,7 +208,7 @@ class Campeonato
         $sql = $campeonatoDAO->listarCampeonatosAll();
         $conexion -> abrir();
         $campeonatos = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
 
         while($fila = $conexion -> registro()){
 
@@ -239,7 +239,7 @@ class Campeonato
         $sql = $campeonatoDAO->listarEquipos();
         $conexion -> abrir();
         $equiopos = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'],$sql['parametros']);
 
         while($fila = $conexion -> registro()){
             $equiopos[] = $fila[0];
@@ -256,7 +256,7 @@ class Campeonato
         $conexion->abrir();
         $sql = $campeonatoDAO->obtenerTablaPosiciones();
 
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'], $sql['parametros']);
 
         $tabla = [];
         while ($fila = $conexion->registro()) {

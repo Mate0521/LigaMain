@@ -47,7 +47,7 @@ class Fecha
         $fechaDAO = new FechaDAO("", $this->id_campeonato, $this->fecha);        
         try{
             $sql=$fechaDAO ->crearFecha();
-            $conexion -> ejecutar($sql);
+            $conexion -> ejecutar($sql['sql'], $sql['parametros']);
             $conexion -> cerrar();
             return true;
         }catch(Exception $e){
@@ -62,7 +62,7 @@ class Fecha
         $sql = $fechaDAO->listarFechas();
         $conexion -> abrir();
         $fechas = [];
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
 
         while($fila = $conexion -> registro()){
             $fechas[] = new Fecha($fila[0], $this->id_campeonato, $fila[1]);       
@@ -77,7 +77,7 @@ class Fecha
         $fechaDAO = new FechaDAO($this->id_fecha);
         $sql = $fechaDAO->obtenerFecha();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
         if($fila = $conexion->registro()){
             $this->fecha=$fila[0];
 
@@ -101,7 +101,7 @@ class Fecha
         $sql=$fechaDAO->eliminarFechas();
         $conexion -> abrir();
         try{
-            $conexion -> ejecutar($sql);
+            $conexion -> ejecutar($sql['sql'], $sql['parametros']);
             $conexion->cerrar();
         }catch(Exception $e){
             return $e;

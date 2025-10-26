@@ -35,7 +35,7 @@ class Liga
         $ligaDAO = new LigaDAO($this->id_liga);
         $sql = $ligaDAO->obtenerLiga();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
         if($fila = $conexion->registro()){
             $this->nombre=$fila[0];
         }
@@ -46,7 +46,7 @@ class Liga
         $ligaDAO = new LigaDAO();
         $sql = $ligaDAO->listarLigas();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'], $sql['parametros']);
         $ligas=[];
         while($fila = $conexion -> registro()){
             $ligas[] = new Liga($fila[0], $fila[1]);

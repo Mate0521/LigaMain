@@ -139,7 +139,6 @@ class Partido
             foreach ($jornada as $match) {
                 $local = $match['local'];
                 $visit = $match['visit'];
-
                 $partido = new Partido();
                 $partido->setIdEqLocal($local);
                 $partido->setIdEqVisit($visit);
@@ -162,7 +161,7 @@ class Partido
             foreach ($partidos as $partido) {
                 $partidoDAO = new PartidoDAO("", $partido->getIdEqLocal(), $partido->getIdEqVisit(), $partido->getIdFase(), $partido->getIdFecha());
                 $sql = $partidoDAO->crearPartido();
-                $conexion->ejecutar($sql);
+                $conexion->ejecutar($sql['sql'], $sql['parametros']);
             }
             $conexion->cerrar();
             return true;
@@ -186,7 +185,7 @@ class Partido
 
         $sql = $partidoDAO->listarPartidos($id_fechas);
         $partidos = [];
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'], $sql['parametros']);
 
         while ($fila = $conexion->registro()) {
             $this->id_partido = $fila[0];
@@ -225,29 +224,6 @@ class Partido
         return $partidos;
     }
 
-    // --- Actualizar resultado y puntos (punto 7) ---
-    public function actualizarResultado() {
-        $partidoDAO = new PartidoDAO($this->id_partido, "", "", "", "", $this->goles_local, $this->goles_visit );
-
-        // Actualizar los goles del partido
-        $partidoDAO->actualizarResultado(); 
-
-        if ($this->goles_local > $this->goles_visit) {
-            // Gana el local
-            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 3, $this->goles_local, $this->goles_visit);
-            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 0, $this->goles_visit, $this->goles_local);
-        } elseif ($this->goles_local < $this->goles_visit) {
-            // Gana el visitante
-            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 0, $this->goles_local, $this->goles_visit);
-            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 3, $this->goles_visit, $this->goles_local);
-        } else {
-            // Empate
-            $partidoDAO->actualizarPuntos($this->id_eq_local->getIdEquipo(), 1, $this->goles_local, $this->goles_visit);
-            $partidoDAO->actualizarPuntos($this->id_eq_visit->getIdEquipo(), 1, $this->goles_visit, $this->goles_local);
-        }
-    }
-
-
     // --- Consultar partido por ID ---
     public function consultar()
     {
@@ -257,7 +233,7 @@ class Partido
 
         $sql = $partidoDAO->consultar();
 
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'], $sql['parametros']);
 
         if ($conexion->filas() > 0) {
             $fila = $conexion->registro();
@@ -286,42 +262,50 @@ class Partido
 
         $conexion->cerrar();
     }
-
-    // --- Generar tabla de posiciones (punto 8) ---
-    public function generarTablaPosiciones()
-    {
+    
+    // --- Actualizar resultado y puntos (punto 7) ---
+    public function actualizarResultado() {
         $conexion = new Conexion();
         $conexion->abrir();
-        $sql = "
-            SELECT 
-                e.id_equipo,
-                e.nombre,
-                e.puntos,
-                e.goles_favor,
-                e.goles_contra,
-                (e.goles_favor - e.goles_contra) AS diferencia
-            FROM g1_equipo e
-            ORDER BY 
-                e.puntos DESC,
-                diferencia DESC,
-                e.goles_favor DESC
-        ";
-        $conexion->ejecutar($sql);
 
-        $tabla = [];
-        while ($fila = $conexion->registro()) {
-            $tabla[] = [
-                'id_equipo' => $fila['id_equipo'],
-                'nombre' => $fila['nombre'],
-                'puntos' => $fila['puntos'],
-                'goles_favor' => $fila['goles_favor'],
-                'goles_contra' => $fila['goles_contra'],
-                'diferencia' => $fila['diferencia']
+        try {
+            $partidoDAO = new PartidoDAO($this->id_partido, "", "", "", "", $this->goles_local, $this->goles_visit);
+
+            // actualizar los goles del partido
+            $sql = $partidoDAO->actualizarResultado();
+            $conexion->ejecutar($sql['sql'], $sql['parametros']);
+
+            // determinar puntos por equipo
+            $puntos_local = 0;
+            $puntos_visit = 0;
+
+            if ($this->goles_local > $this->goles_visit) {
+                $puntos_local = 3; // gana local
+            } elseif ($this->goles_local < $this->goles_visit) {
+                $puntos_visit = 3; // gana visitante
+            } else {
+                $puntos_local = 1; // empate
+                $puntos_visit = 1;
+            }
+
+            // actualizar puntuaciones en la tabla campeonato_equipos
+            $actualizaciones = [
+                [$this->id_eq_local, $puntos_local, $this->goles_local, $this->goles_visit],
+                [$this->id_eq_visit, $puntos_visit, $this->goles_visit, $this->goles_local]
             ];
-        }
 
-        $conexion->cerrar();
-        return $tabla;
+            foreach ($actualizaciones as [$id_equipo, $puntos, $goles_favor, $goles_contra]) {
+                $sql = $partidoDAO->actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra);
+                $conexion->ejecutar($sql['sql'], $sql['parametros']);
+            }
+
+            $conexion->cerrar();
+            return true;
+
+        } catch (Exception $e) {
+            $conexion->cerrar();
+            throw new Exception("Error al actualizar resultado: " . $e->getMessage());
+        }
     }
 
     public function eliminarPartidos($fechas){
@@ -337,7 +321,7 @@ class Partido
         $sql=$partidoDAO->eliminarPartidos($id_fechas);
         $conexion->abrir();
         try{
-            $conexion->ejecutar($sql);
+            $conexion->ejecutar($sql['sql'], $sql['parametros']);
             $conexion->cerrar();
         }catch(Exception $e){
             return $e->getMessage();

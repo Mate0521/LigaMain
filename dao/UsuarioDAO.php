@@ -20,28 +20,54 @@ class UsuarioDAO
     //metodos 
     public function crearUsuario()
     {
-        return "insert into g1_usuario(nombre, correo, clave)
-                values ('" . $this -> nombre . "', '". $this -> correo . "','" . md5($this -> clave) . "')";
+        return [
+            "sql"=>"insert into g1_usuario(nombre, correo, clave)
+                values (':nombre', ':correo', ':clave')",
+            "parametros"=>[
+                ":nombre"=>$this->nombre,
+                ":correo"=>$this->correo,
+                ":clave"=>md5($this->clave)
+            ]
+            ];
     }
     public function autenticarUsuario()
     {   
-        return "SELECT id_usuario
+        return [
+            "sql"=>"SELECT id_usuario
                 FROM g1_usuario
-                WHERE correo = '$this->correo' AND clave = '".md5($this->clave)."';";
+                WHERE correo = '$this->correo' AND clave = '".md5($this->clave)."';",
+            "parametros"=>[
+                ":correo"=>$this->correo,
+                ":clave"=>md5($this->clave)
+            ]
+            ];
     }
     public function obtenerUsuario()
     {
-        return "SELECT `nombre`, `correo` 
+        return [
+            "sql"=>"SELECT `nombre`, `correo` 
                 FROM `g1_usuario` 
-                WHERE `id_usuario` = ". $this->id_usuario .";";
+                WHERE `id_usuario` = :id_usuaio ;",
+            "parametros"=>[
+                ":id_usuaio"=>$this->id_usuario
+            ]
+            ];
     }
 
     public function eliminarUsuario(){
-        return "DELETE FROM `g1_usuario` 
-                WHERE `id_usuario`=". $this -> id_usuario .";";
+        return [
+            "sql"=>"DELETE FROM `g1_usuario` 
+                WHERE `id_usuario`= :id_usuario ;",
+            "parametros"=>[
+                ":id_usuario"=>$this->id_usuario
+            ]
+            ];
     }
     public function listarUsuarios(){
-        return  "SELECT `id_usuario`, `nombre`, `correo` 
-                FROM `g1_usuario`";
+        return [
+            "sql"=>"SELECT `id_usuario`, `nombre`, `correo` 
+                FROM `g1_usuario`",
+            "parametros"=>[]
+        ];
     }
 }

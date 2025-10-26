@@ -34,7 +34,7 @@ class Fase
         $faseDAO = new FaseDAO($this->id_fase);
         $sql = $faseDAO->obtenerFase();
         $conexion -> abrir();
-        $conexion -> ejecutar($sql);
+        $conexion -> ejecutar($sql['sql'],$sql['parametros']);
         if($fila = $conexion->registro()){
             $this->nombre=$fila[0];
         }
