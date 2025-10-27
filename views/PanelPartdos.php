@@ -47,7 +47,23 @@ if (!isset($partidos) || empty($partidos)) {
                     <td><?= $partidoOb->getGolesVisit() ?></td>
                     <td><?= $partidoOb->getIdFase()->getNombre() ?></td>
                     <td>
-                        <a href="?pid=<?php echo base64_encode("EdicionPartido")?>&idPartido=<?php echo base64_encode($partidoOb->getIdPartido())?>" class="btn btn-success">Jugar Partido</a>
+                        <?php 
+                            $fechaPartido = $partidoOb->getIdFecha()->getFecha();
+                            $hoy = date('Y-m-d');
+                            $disabled = ($fechaPartido !== $hoy);
+                        ?>
+
+                        <form method="GET" >
+                            <input type="hidden" name="pid" value="<?= base64_encode('EdicionPartido') ?>">
+                            <input type="hidden" name="idPartido" value="<?= base64_encode($partidoOb->getIdPartido()) ?>">
+
+                            <button 
+                                type="submit" 
+                                class="btn btn-success" 
+                                <?= $disabled ? 'disabled data-bs-toggle="tooltip" title="Solo disponible el día del partido"' : '' ?>>
+                                Jugar Partido
+                            </button>
+                        </form>
                     </td>
                 </tr>
 
