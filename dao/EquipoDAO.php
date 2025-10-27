@@ -22,7 +22,7 @@ class EquipoDAO
     {
         return [
             "sql"=>"INSERT INTO `g1_equipo`(`nombre`, `id_liga`, `img`) 
-                VALUES (':nombrre',':id_liga',':img');",
+                VALUES ( :nombrre, :id_liga, :img );",
             "parametros"=>[
                 ":nombrre"=>$this->nombre,
                 ":id_liga"=>$this->id_liga,
@@ -53,7 +53,7 @@ class EquipoDAO
         return [
             "sql"=>"SELECT `id_equipo`
                 FROM `g1_equipo` 
-                WHERE `nombre`= ':nombre' ;",
+                WHERE `nombre`= :nombre ;",
             "parametros"=>[
                 ":nombre"=>$this->nombre
             ]

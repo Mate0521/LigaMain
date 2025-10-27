@@ -1,6 +1,6 @@
 <?php
 
-$id_campeonato = base64_decode($_GET["id_cam"]);
+$id_campeonato = base64_decode($_GET["id_cam"]);    
 $partido = new Partido();
 $equipo = new Equipo();
 $fase = new Fase();
@@ -8,17 +8,12 @@ $fecha = new Fecha("", $id_campeonato);
 $campeonato = new Campeonato($id_campeonato, $_SESSION["id"]);
 $campeonato->obtenerCampeonatoId();
 
-$campeonatoDAO = new CampeonatoDAO();
-$tablaPosiciones = $campeonatoDAO->obtenerTablaPosiciones($id_campeonato);
 
 // Obtener las fechas del campeonato
 $fechas = $fecha->listarFechas();
 
-
 // Obtener los partidos asociados a esas fechas
 $partidos = $partido->obtenerPartidos($fechas);
-
-
 
 //caso en el que no se hayan iniciado los partidos 
 if (!isset($partidos) || empty($partidos)) {

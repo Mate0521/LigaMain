@@ -22,9 +22,9 @@ class TipoDAO{
         return [
             "sql" => "SELECT nombre 
                     FROM g1_tipo 
-                    WHERE id_tipo = :id_tipo",
-            "parametros" => ["
-                :id_tipo" => $this->id_tipo
+                    WHERE id_tipo = :id_tipo ",
+            "parametros" => [
+                ":id_tipo" => $this->id_tipo
                 ]
         ];
     }

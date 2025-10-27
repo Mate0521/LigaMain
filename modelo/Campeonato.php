@@ -246,6 +246,7 @@ class Campeonato
         }
 
         $conexion -> cerrar();
+        
         return $equiopos;
 
     }

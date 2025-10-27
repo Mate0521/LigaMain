@@ -19,7 +19,7 @@ class FechaDAO
     {
         return [
             "sql"=>"INSERT INTO `g1_fecha`(`id_campeonato`, `fecha`) 
-                VALUES (':id_campeonato',':fecha ');",
+                VALUES ( :id_campeonato , :fecha );",
             "parametros"=>[
                 ":id_campeonato"=>$this->id_campeonato,
                 ":fecha"=>$this->fecha
@@ -30,9 +30,9 @@ class FechaDAO
 
     public function listarFechas(){
         return [
-            "sql"=>"SELECT `id_fecha`,  `fecha`
+            "sql"=>"SELECT `id_fecha`, `fecha`
                 FROM `g1_fecha` 
-                WHERE `id_campeonato` = ". $this->id_campeonato .";",
+                WHERE `id_campeonato` = :id_campeonato ;",
             "parametros"=>[
                 ":id_campeonato"=>$this->id_campeonato
             ]

@@ -28,7 +28,7 @@ class PartidoDAO
     {
         return [
             "sql"=>"INSERT INTO g1_partido (id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit)
-                VALUES (':id_eq_local', ':id_eq_visit', ':id_fase', ':fecha', 0, 0)",
+                VALUES (:id_eq_local, :id_eq_visit, :id_fase, :fecha, 0, 0)",
             "parametros"=>[
                 ":id_eq_local"=>$this->id_eq_local,
                 ":id_eq_visit"=>$this->id_eq_visit,
@@ -41,14 +41,28 @@ class PartidoDAO
     // Listar partidos por fechas
     public function listarPartidos($id_fechas)
     {
+        if (!is_array($id_fechas)) {
+            $id_fechas = explode(',', $id_fechas);
+        }
+
+        // creamos placeholders dinámicos (:id_fecha0, :id_fecha1, etc.)
+        $placeholders = [];
+        $parametros = [];
+        foreach ($id_fechas as $index => $valor) {
+            $ph = ":id_fecha{$index}";
+            $placeholders[] = $ph;
+            $parametros[$ph] = $valor;
+        }
+
+        // Unimos todos los placeholders en una sola cadena
+        $inClause = implode(', ', $placeholders);
+
         return [
-            "sql"=>"SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
-                FROM g1_partido
-                WHERE id_fecha IN (:id_fechas)",
-            "parametros"=>[
-                ":id_fechas"=>$id_fechas
-            ]
-            ];
+            "sql" => "SELECT id_partido, id_eq_local, id_eq_visit, id_fase, id_fecha, goles_local, goles_visit 
+                    FROM g1_partido
+                    WHERE id_fecha IN ($inClause)",
+            "parametros" => $parametros
+        ];
     }
 
     // Consultar partido individual
@@ -78,32 +92,47 @@ class PartidoDAO
         ];
     }
 
-    public function actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra) {
+    public function actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra, $id_campeonato) {
         return [
             "sql" => "UPDATE g1_campeonato_equipos
-                      SET puntuacion = puntuacion + :puntos,
-                          goles_favor = goles_favor + :goles_favor,
-                          goles_contra = goles_contra + :goles_contra
-                      WHERE id_equipo = :id_equipo;",
+                    SET puntuacion = puntuacion + :puntos,
+                        goles_favor = goles_favor + :goles_favor,
+                        goles_contra = goles_contra + :goles_contra
+                    WHERE id_equipo = :id_equipo AND id_campeonato  = :id_campeonato ;",
             "parametros" => [
                 ":puntos" => $puntos,
                 ":goles_favor" => $goles_favor,
                 ":goles_contra" => $goles_contra,
-                ":id_equipo" => $id_equipo
+                ":id_equipo" => $id_equipo,
+                ":id_campeonato"=> $id_campeonato
             ]
         ];
     }
 
-    public function eliminarPartidos($fechas){
-        return [
-            "sql"=>"DELETE FROM `g1_partido` 
-                WHERE `id_fecha` IN (". $fechas .");",
-            "parametros"=>[
-                ":fechas"=>$fechas
-            ]
-            ];
-    }
+    public function eliminarPartidos($id_fechas)
+    {
+        if (!is_array($id_fechas)) {
+            $id_fechas = explode(',', $id_fechas);
+        }
 
+        // creamos placeholders dinámicos (:id_fecha0, :id_fecha1, etc.)
+        $placeholders = [];
+        $parametros = [];
+        foreach ($id_fechas as $index => $valor) {
+            $ph = ":id_fecha{$index}";
+            $placeholders[] = $ph;
+            $parametros[$ph] = $valor;
+        }
+
+        // Unimos todos los placeholders en una sola cadena
+        $inClause = implode(', ', $placeholders);
+
+        return [
+            "sql" => "DELETE FROM g1_partido
+                    WHERE id_fecha IN ($inClause)",
+            "parametros" => $parametros
+        ];
+    }
 
 }
 ?>

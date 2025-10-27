@@ -117,8 +117,8 @@ class Partido
             $ultimo = array_pop($equipos);
             array_splice($equipos, 1, 0, [$ultimo]);
         }
-
         return $calendario;
+        
     }
 
     public function eliminatoria() {
@@ -264,7 +264,7 @@ class Partido
     }
     
     // --- Actualizar resultado y puntos (punto 7) ---
-    public function actualizarResultado() {
+    public function actualizarResultado($id_camp) {
         $conexion = new Conexion();
         $conexion->abrir();
 
@@ -290,12 +290,12 @@ class Partido
 
             // actualizar puntuaciones en la tabla campeonato_equipos
             $actualizaciones = [
-                [$this->id_eq_local, $puntos_local, $this->goles_local, $this->goles_visit],
-                [$this->id_eq_visit, $puntos_visit, $this->goles_visit, $this->goles_local]
+                [$this->id_eq_local->getIdEquipo(), $puntos_local, $this->goles_local, $this->goles_visit, $id_camp],
+                [$this->id_eq_visit->getIdEquipo(), $puntos_visit, $this->goles_visit, $this->goles_local, $id_camp]
             ];
 
-            foreach ($actualizaciones as [$id_equipo, $puntos, $goles_favor, $goles_contra]) {
-                $sql = $partidoDAO->actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra);
+            foreach ($actualizaciones as [$id_equipo, $puntos, $goles_favor, $goles_contra, $id_campeona]) {
+                $sql = $partidoDAO->actualizarPuntos($id_equipo, $puntos, $goles_favor, $goles_contra, $id_campeona);
                 $conexion->ejecutar($sql['sql'], $sql['parametros']);
             }
 

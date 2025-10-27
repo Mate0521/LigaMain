@@ -22,7 +22,7 @@ class UsuarioDAO
     {
         return [
             "sql"=>"insert into g1_usuario(nombre, correo, clave)
-                values (':nombre', ':correo', ':clave')",
+                values ( :nombre, :correo, :clave )",
             "parametros"=>[
                 ":nombre"=>$this->nombre,
                 ":correo"=>$this->correo,
@@ -33,9 +33,9 @@ class UsuarioDAO
     public function autenticarUsuario()
     {   
         return [
-            "sql"=>"SELECT id_usuario
+            "sql"=> "SELECT id_usuario
                 FROM g1_usuario
-                WHERE correo = '$this->correo' AND clave = '".md5($this->clave)."';",
+                WHERE correo = :correo AND clave = :clave ;",
             "parametros"=>[
                 ":correo"=>$this->correo,
                 ":clave"=>md5($this->clave)

@@ -23,7 +23,7 @@ class CampeonatoDAO
     {
         return [
             "sql" => "INSERT INTO `g1_campeonato`( `id_usuario`, `nombre`, `id_tipo`) 
-                      VALUES (':id_usuario',':nombre', ':id_tipo');",
+                      VALUES ( :id_usuario, :nombre, :id_tipo );",
             "parametros"  => [
                 ":id_usuario"=> $this->id_usuario,
                 ":nombre" => $this->nombre,
@@ -58,7 +58,7 @@ class CampeonatoDAO
         return [
             "sql"=>" SELECT `id_campeonato`
                 FROM `g1_campeonato` 
-                WHERE `id_usuario`= :id_usuario AND `nombre`=':nombre';",
+                WHERE `id_usuario`= :id_usuario AND `nombre`= :nombre ;",
             "parametros"=>[
                 ":id_usuario"=>$this->id_usuario,
                 ":nombre"=>$this->nombre
@@ -68,7 +68,7 @@ class CampeonatoDAO
     public function relaionarEquipos($id_equipo){
         return[
             "slq"=>"INSERT INTO `g1_campeonato_equipos`(`id_campeonato`, `id_equipo`, `puntuacion`) 
-                VALUES (':id_campeonato',':id_equipo','0')",
+                VALUES ( :id_campeonato, :id_equipo ,'0')",
             "parametros"=>[
                 ":id_campeonato"=>$this->id_campeonato,
                 ":id_equipo"=>$id_equipo
