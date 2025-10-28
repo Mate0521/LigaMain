@@ -66,7 +66,7 @@ $campeonatos = $camp->listarCampeonatosAll();
 								<button type="submit" class="btn btn-primary" name="autenticar">Autenticar</button>
 							</div>
 					<a href="?pid=<?php echo base64_encode('Registrarse'); ?>" class="btn btn-link">
-    ¿No tienes cuenta? Regístrate
+    ¿No tienes cuenta? Regístratew
 </a>
 
 
