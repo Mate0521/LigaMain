@@ -12,7 +12,14 @@ class FaseDAO
     }
 
     public function obtenerFase(){
-        return "SELECT `nombre` FROM `g1_fase` WHERE `id_fase` =". $this->id_fase .";";
+        return [
+            "sql"=>"SELECT `nombre` 
+                FROM `g1_fase` 
+                WHERE `id_fase` = :id_fase ;",
+            "parametros"=>[
+                ":id_fase"=>$this->id_fase
+            ]
+            ];
     }
 
 }

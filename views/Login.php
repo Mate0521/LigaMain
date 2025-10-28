@@ -9,8 +9,6 @@ if (isset($_POST["autenticar"])) {
     } else {
         $admin = new Admin("", "", $correo, $clave);
         $cliente = new Usuario("", "", $correo, $clave);
-		var_dump($cliente);
-		var_dump($admin);
 
         if ($admin->autenticarAdmin()) {
             $_SESSION["id"] = $admin->getIdAdmin();
@@ -55,7 +53,7 @@ $campeonatos = $camp->listarCampeonatosAll();
 					</div>
 
 					<div class="card-body text-center">
-						<form method="post" action="<?php echo base64_encode("index.php")?>" name="autenticar">
+						<form method="post" action="?pid=<?php echo base64_encode("Login")?>" name="autenticar">
 							<div class="mb-3">
 								<input type="email" class="form-control" name="correo"
 									placeholder="Correo" required>

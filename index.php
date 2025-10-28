@@ -1,6 +1,6 @@
-    <?php
-    session_name("LIGAMAIN_SESSION");
-    session_start();
+<?php
+session_name("LIGAMAIN_SESSION");
+session_start();
 
 
 include_once 'modelo/Usuario.php';

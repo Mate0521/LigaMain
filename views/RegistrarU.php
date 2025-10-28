@@ -42,7 +42,7 @@ if(isset($_POST["registrar"])){
 						}
 						?>
 	
-						<form method="post" action=<?php echo base64_encode("index.php?pid=Registrarse") ?> name="registrar">
+						<form method="post" action="?pid=<?php echo base64_encode("Registrarse") ?>" name="registrar">
 							<div class="mb-3">
 								<input type="text" class="form-control" name="nombre"
 									placeholder="Nombre" required>

@@ -60,7 +60,8 @@ class Usuario
         $conexion -> abrir();
         $clienteDAO = new UsuarioDAO("", $this -> nombre, $this -> correo, $this -> clave);        
         try{
-            $conexion -> ejecutar($clienteDAO ->crearUsuario());
+            $sql=$clienteDAO ->crearUsuario();
+            $conexion -> ejecutar($sql['sql'],$sql['parametros']);
             $conexion -> cerrar();
             return true;
         }catch(Exception $e){
@@ -73,7 +74,7 @@ class Usuario
         $adminDAO = new UsuarioDAO("", "", $this->correo, $this->clave);
         $sql =$adminDAO->autenticarUsuario();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'], $sql['parametros']);
         if($fila = $conexion->registro()){
             $this->id_usuario = $fila[0];
             $conexion->cerrar();
@@ -87,7 +88,7 @@ class Usuario
         $usuarioDAO = new UsuarioDAO($this->id_usuario);
         $sql = $usuarioDAO->obtenerUsuario();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'], $sql['parametros']);
         if($fila = $conexion->registro()){
             $this->nombre = $fila[0];
             $this->correo = $fila[1];
@@ -124,7 +125,7 @@ class Usuario
         $usuarioDAO = new UsuarioDAO();
         $sql = $usuarioDAO->listarUsuarios();
         $conexion->abrir();
-        $conexion->ejecutar($sql);
+        $conexion->ejecutar($sql['sql'],$sql['parametros']);
         $usuariods=[];
 
         while($fila=$conexion->registro()){
